@@ -1,0 +1,117 @@
+<head>
+    <style>
+        /* Basic reset and body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Main container to center content */
+        .container {
+            width: 100%;
+            padding: 40px 0;
+            box-sizing: border-box;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        /* Box that holds verification info */
+        .verification-box {
+            display: inline-block;
+            padding: 25px 35px;
+            border-radius: 8px;
+            border: 1px solid #f2e6ac;
+            background-color: #fffae5; /* Light yellow */
+            max-width: 500px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+
+        /* Main heading styles */
+        .heading {
+            font-size: 24px;
+            margin-bottom: 18px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        /* Text message styles */
+        .message {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #555555;
+            line-height: 1.5;
+        }
+
+        /* Verification code styling */
+        .code {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px 24px;
+            background-color: #ffeb8e;
+            color: #333333;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+
+        /* Footer text */
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999999;
+        }
+
+        /* Responsive styles for smaller devices */
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 20px 0;
+            }
+
+            .verification-box {
+                padding: 20px;
+            }
+
+            .heading {
+                font-size: 20px;
+            }
+
+            .message {
+                font-size: 14px;
+            }
+
+            .code {
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+
+            .footer {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="verification-box">
+            <!-- Main heading -->
+            <div class="heading">Email Verification</div>
+
+            <!-- Message to user -->
+            <div class="message">
+                Thank you for signing up! Please use the following code to verify your email address:
+            </div>
+
+            <!-- Verification code area: replace CODE_HERE with your dynamic value -->
+            <div class="code">{{code}}</div>
+
+            <!-- Footer or additional info -->
+            <div class="footer">
+                © 2025 Metis. All rights reserved.
+            </div>
+        </div>
+    </div>
+</body>

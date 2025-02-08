@@ -1,0 +1,59 @@
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T16:53:55.640Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T16:53:55.672Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T16:53:55.673Z"}
+{"level":"info","message":"Started at: 2025-02-06T16:53:55.673Z","service":"metis-backend","timestamp":"2025-02-06T16:53:55.673Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T16:56:40.889Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T16:56:40.897Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T16:56:40.897Z"}
+{"level":"info","message":"Started at: 2025-02-06T16:56:40.898Z","service":"metis-backend","timestamp":"2025-02-06T16:56:40.898Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T17:03:48.483Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T17:03:48.490Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T17:03:48.490Z"}
+{"level":"info","message":"Started at: 2025-02-06T17:03:48.491Z","service":"metis-backend","timestamp":"2025-02-06T17:03:48.491Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T17:14:50.251Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T17:14:50.259Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T17:14:50.260Z"}
+{"level":"info","message":"Started at: 2025-02-06T17:14:50.261Z","service":"metis-backend","timestamp":"2025-02-06T17:14:50.261Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T17:16:03.788Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T17:16:03.798Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T17:16:03.798Z"}
+{"level":"info","message":"Started at: 2025-02-06T17:16:03.799Z","service":"metis-backend","timestamp":"2025-02-06T17:16:03.799Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T17:20:04.805Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T17:20:04.812Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T17:20:04.813Z"}
+{"level":"info","message":"Started at: 2025-02-06T17:20:04.813Z","service":"metis-backend","timestamp":"2025-02-06T17:20:04.813Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T17:20:07.297Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:02:46.681Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:02:46.693Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:02:46.693Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:02:46.694Z","service":"metis-backend","timestamp":"2025-02-06T19:02:46.694Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T19:02:55.918Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:06:53.907Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:06:53.913Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:06:53.913Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:06:53.914Z","service":"metis-backend","timestamp":"2025-02-06T19:06:53.914Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T19:07:54.205Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:08:00.424Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:08:00.430Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:08:00.431Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:08:00.432Z","service":"metis-backend","timestamp":"2025-02-06T19:08:00.432Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T19:08:21.698Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:08:27.681Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:08:27.687Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:08:27.687Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:08:27.689Z","service":"metis-backend","timestamp":"2025-02-06T19:08:27.689Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T19:08:34.824Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:08:40.711Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:08:40.717Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:08:40.717Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:08:40.718Z","service":"metis-backend","timestamp":"2025-02-06T19:08:40.718Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T19:09:48.547Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:09:53.946Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:09:53.952Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:09:53.952Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:09:53.953Z","service":"metis-backend","timestamp":"2025-02-06T19:09:53.953Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-06T19:11:24.828Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-06T19:11:24.834Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-06T19:11:24.834Z"}
+{"level":"info","message":"Started at: 2025-02-06T19:11:24.835Z","service":"metis-backend","timestamp":"2025-02-06T19:11:24.835Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-06T19:12:10.783Z"}
