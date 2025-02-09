@@ -10,7 +10,9 @@ import { Container } from "typedi";
 import { useContainer } from "routing-controllers";
 import { setupContainer } from "@infrastructure/container";
 import { ILogger } from "@domain/services/impl.logger.service";
+import { authRoutes } from '@presentation/routes/auth.routes';
 import { errorHandler } from "@presentation/middlewares/error.middleware";
+
 
 export class App {
     private readonly app: express.Application;
@@ -24,7 +26,7 @@ export class App {
         this.port = config.port;
         this.logger = Container.get('logger');
 
-        this.setupMiddlewares(); this.setupErrorHandling();
+        this.setupMiddlewares(); this.setupRoutes(); this.setupErrorHandling();
     }
 
     public async start(): Promise<void> {
@@ -46,6 +48,11 @@ export class App {
 
     private setupErrorHandling(): void {
         this.app.use(errorHandler);
+    }
+
+    private setupRoutes(): void {
+        // Auth routes
+        this.app.use(`/auth`, authRoutes);
     }
 
     private setupMiddlewares(): void {

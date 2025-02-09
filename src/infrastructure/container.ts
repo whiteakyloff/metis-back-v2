@@ -9,8 +9,10 @@ import { JwtTokenService } from "./services/token.service";
 import { LocalizationService } from "./services/localization.service";
 
 import { GoogleClient } from "./clients/google.client";
+import { ClaudeClient } from "./clients/claude.client";
 
 import { UserRepository } from "./database/mongoose/repositories/user.repository";
+import {RegisterUseCase} from "../application/use-cases/register.use-case";
 
 export const setupContainer = () => {
     // Main services
@@ -27,5 +29,19 @@ export const setupContainer = () => {
     Container.set('tokenService', new JwtTokenService(config));
 
     // Clients
-    Container.set('googleClient', new GoogleClient(new LoggerService(), config));
+    Container.set('googleClient', new GoogleClient(
+        Container.get('Logger'), config)
+    );
+    Container.set('claudeClient', new ClaudeClient(
+        Container.get('Logger'), config)
+    );
+
+    // Use cases
+    Container.set(RegisterUseCase, new RegisterUseCase(
+        Container.get('Logger'),
+        Container.get('MailService'),
+        Container.get('UserRepository'),
+        Container.get('localizationService'),
+        Container.get('PasswordHasher')
+    ));
 }

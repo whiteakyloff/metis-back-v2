@@ -1,6 +1,5 @@
 export interface IClient {
     connect(): Promise<void>;
-
     disconnect(): Promise<void>;
 }
 

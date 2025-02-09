@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "commonjs",
+    "module": "es2022",
     "lib": ["es2017", "esnext.asynciterable"],
     "strict": true,
     "sourceMap": true,

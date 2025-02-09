@@ -42,7 +42,7 @@ export class ClaudeClient implements IAIClient {
         }
     }
 
-    async doRequest(_text: string): Promise<string | null> {
+    async doRequest(text: string): Promise<string | null> {
         const response = await this.client?.messages.create(
             {
                 model: 'claude-3-5-sonnet-20241022', max_tokens: 100,
@@ -60,7 +60,7 @@ export class ClaudeClient implements IAIClient {
                     'hola: [o.la]',
                 messages: [{
                     "role": "user", "content": [{
-                        type: "text", text: "text"
+                        type: "text", text
                     }]
                 }]
             }
