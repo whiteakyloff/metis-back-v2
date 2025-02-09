@@ -14,7 +14,8 @@ const envSchema = z.object({
     EMAIL_PASS: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
-    GITHUB_TOKEN: z.string(), GITHUB_URL: z.string().url()
+    GITHUB_TOKEN: z.string(), GITHUB_URL: z.string().url(),
+    CLAUDE_API_KEY: z.string(), DEEPSEEK_API_KEY: z.string()
 });
 
 const env = envSchema.parse(process.env);
@@ -39,8 +40,13 @@ export const config = {
     google: {
         clientId: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET
+    },
+    claude: {
+        apiKey: env.CLAUDE_API_KEY
+    },
+    deepseek: {
+        apiKey: env.DEEPSEEK_API_KEY
     }
-
 };
 
 export type AppConfig = typeof config;

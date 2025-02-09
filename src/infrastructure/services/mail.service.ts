@@ -4,6 +4,7 @@ import { readFileSync } from 'fs';
 import { Service } from 'typedi';
 import { join } from 'path';
 import { AppConfig } from "@config";
+import { AppError } from "@infrastructure/errors/app.error";
 import { IMailService } from "@domain/services/impl.mail.service";
 
 const mailHtmlTemplate = readFileSync(
@@ -33,8 +34,7 @@ export class MailService implements IMailService {
                 html: mailHtmlTemplate.replace('{{code}}', code)
             });
         } catch (error) {
-            console.log('Error sending password reset email:', error);
-
+            throw new AppError('MAIL_ERROR', 'Error sending verification email', 400);
         }
     }
 }

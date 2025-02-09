@@ -6,6 +6,7 @@
     "start": "npx tsx src/server.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
     "bcrypt": "^5.1.1",
     "compression": "^1.7.5",
     "cookie-parser": "~1.4.4",
@@ -14,6 +15,7 @@
     "dotenv": "^16.4.7",
     "express": "5.0.0",
     "express-rate-limit": "^7.5.0",
+    "google-auth-library": "^9.15.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "less-middleware": "~2.2.1",
@@ -21,6 +23,7 @@
     "morgan": "~1.9.1",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.10.0",
+    "openai": "^4.83.0",
     "reflect-metadata": "^0.2.2",
     "routing-controllers": "^0.10.4",
     "typedi": "^0.10.0",
