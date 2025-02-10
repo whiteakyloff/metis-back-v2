@@ -55,12 +55,6 @@ export class App {
         this.expressApp.use(errorHandler);
     }
 
-    private async setupRoutes(): Promise<void> {
-        const { authRoutes } = await import('@presentation/routes/auth.routes');
-
-        this.expressApp.use('/auth', authRoutes);
-    }
-
     private setupMiddlewares(): void {
         this.expressApp.use(helmet());
         this.expressApp.use(cors({
@@ -86,6 +80,12 @@ export class App {
         } catch (error) {
             this.logger.error('Error connecting to MongoDB', { error }); process.exit(1);
         }
+    }
+
+    private async setupRoutes(): Promise<void> {
+        const { authRoutes } = await import('@presentation/routes/auth.routes');
+
+        this.expressApp.use('/auth', authRoutes);
     }
 
     private async startClients(): Promise<void> {
