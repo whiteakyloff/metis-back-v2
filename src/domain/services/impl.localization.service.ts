@@ -1,6 +1,6 @@
 export interface ILocalizationService {
-    refreshLocalization(): Promise<void>
+    refreshLocalization(): Promise<void>;
 
-    getText(): Record<string, string>
-    getTextById(id: string): string
+    onUpdate(callback: () => void): void;
+    getText(): Record<string, string>; getTextById(id: string): string;
 }

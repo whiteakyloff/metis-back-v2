@@ -5,7 +5,6 @@ import { Inject, Service } from "typedi";
 import { AppConfig } from "@config";
 import { AppError } from "@infrastructure/errors/app.error";
 
-import { ILogger } from "@domain/services/impl.logger.service";
 import { IAIClient } from "@domain/clients/impl.client";
 
 @Service()
@@ -13,8 +12,6 @@ export class ClaudeClient implements IAIClient {
     private client: Anthropic | null = null;
 
     constructor(
-        @Inject('Logger')
-        private readonly logger: ILogger,
         @Inject('config')
         private readonly config: AppConfig
     ) {}
@@ -24,8 +21,6 @@ export class ClaudeClient implements IAIClient {
             this.client = new Anthropic({
                 apiKey: this.config.claude.apiKey
             });
-
-            this.logger.info('Claude Client connected successfully.');
         } catch (error) {
             throw new AppError('CLAUDE_CLIENT_ERROR', 'Error connecting to Claude Client', 400);
         }
@@ -36,7 +31,6 @@ export class ClaudeClient implements IAIClient {
             if (this.client) {
                 this.client = null;
             }
-            this.logger.info('Claude Client disconnected successfully.');
         } catch (error) {
             throw new AppError('CLAUDE_CLIENT_ERROR', 'Error disconnecting from Claude Client', 400);
         }

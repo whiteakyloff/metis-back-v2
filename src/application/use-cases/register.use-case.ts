@@ -34,7 +34,7 @@ export class RegisterUseCase {
             const hashedPassword = await this.passwordHasher.hash(input.password);
 
             const user = User.create({
-                email: input.email, username: input.username, password: hashedPassword
+                email: input.email, username: input.username || input.email.split('@')[0], password: hashedPassword
             });
             await this.userRepository.save(user);
 

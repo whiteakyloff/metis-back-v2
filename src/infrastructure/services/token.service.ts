@@ -4,10 +4,10 @@ import { Service, Inject } from 'typedi';
 import { AppConfig } from '@config';
 import { ITokenService } from "@domain/services/impl.token.service";
 
-@Service() // Use Service decorator here
+@Service()
 export class JwtTokenService implements ITokenService {
     constructor(
-        @Inject('config') // Inject the configuration object
+        @Inject('config')
         private readonly config: AppConfig
     ) {}
 

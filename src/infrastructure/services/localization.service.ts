@@ -11,6 +11,8 @@ export class LocalizationService implements ILocalizationService {
     private readonly localizationCache: NodeCache;
     private readonly refreshIntervalMs: number = 60 * 60 * 1000; // оновлення кожну годину
 
+    private updateCallbacks: (() => void)[] = [];
+
     constructor(
         @Inject('config')
         private readonly config: AppConfig
@@ -47,6 +49,12 @@ export class LocalizationService implements ILocalizationService {
 
         const data = (await response.json()) as Record<string, string>;
         this.localizationCache.set('localization', data);
+
+        this.updateCallbacks.forEach(callback => callback());
+    }
+
+    onUpdate(callback: () => void): void {
+        this.updateCallbacks.push(callback);
     }
 
     getTextById(id: string): string {

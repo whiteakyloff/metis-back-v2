@@ -2,38 +2,41 @@ import express from 'express';
 import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
-import rateLimit from 'express-rate-limit';
+import rateLimit from "express-rate-limit";
 import compression from "compression";
 
+import { Server } from "socket.io";
 import { config } from "@config";
 import { Container } from "typedi";
 import { useContainer } from "routing-controllers";
 import { setupContainer } from "@infrastructure/container";
 import { ILogger } from "@domain/services/impl.logger.service";
-import { authRoutes } from '@presentation/routes/auth.routes';
 import { errorHandler } from "@presentation/middlewares/error.middleware";
-
+import { IClient } from "@domain/clients/impl.client";
 
 export class App {
-    private readonly app: express.Application;
+    public readonly expressApp: express.Application;
     private readonly port: number;
     private readonly logger: ILogger;
+    private readonly io: Server;
 
     constructor() {
-        setupContainer(); useContainer(Container);
+        this.expressApp = express();
+        setupContainer(this); useContainer(Container);
 
-        this.app = express();
         this.port = config.port;
         this.logger = Container.get('logger');
+        this.io = Container.get('socket.io');
 
-        this.setupMiddlewares(); this.setupRoutes(); this.setupErrorHandling();
+        this.setupMiddlewares(); this.setupErrorHandling();
     }
 
     public async start(): Promise<void> {
        try {
-           await this.connectToDatabase()
+           await this.connectToDatabase();
+           await this.setupRoutes(); await this.startClients();
 
-           this.app.listen(this.port, () => {
+           this.expressApp.listen(this.port, () => {
                this.logger.info(`Server is running on port ${config.port}`);
                this.logger.info(`Environment: ${config.nodeEnv}`);
                this.logger.info(`Started at: ${new Date().toISOString()}`);
@@ -47,28 +50,31 @@ export class App {
     }
 
     private setupErrorHandling(): void {
-        this.app.use(errorHandler);
+        this.expressApp.use(errorHandler);
     }
 
-    private setupRoutes(): void {
-        // Auth routes
-        this.app.use(`/auth`, authRoutes);
+    private async setupRoutes(): Promise<void> {
+        const { authRoutes } = await import('@presentation/routes/auth.routes');
+
+        this.expressApp.use('/auth', authRoutes);
     }
 
     private setupMiddlewares(): void {
-        this.app.use(helmet());
-        this.app.use(cors({
+        this.expressApp.use(helmet());
+        this.expressApp.use(cors({
             origin: config.corsOrigin, credentials: true
         }));
 
         const limiter = rateLimit({
-            windowMs: 15 * 60 * 1000, // 15 хвилин
-            limit: 100 // обмеження до 100 запитів за цей проміжок часу з одного IP
+            windowMs: 15 * 60 * 1000,
+            limit: 100
         });
-        this.app.use(limiter);
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(compression());
+        this.expressApp.use(limiter);
+        this.expressApp.use(express.json());
+        this.expressApp.use(express.urlencoded({ extended: true }));
+        this.expressApp.use(compression());
+
+        this.io.httpServer.listen(this.port);
     }
 
     private async connectToDatabase(): Promise<void> {
@@ -80,14 +86,51 @@ export class App {
         }
     }
 
+    private async startClients(): Promise<void> {
+        try {
+            const clients = {
+                GoogleClient: Container.get<IClient>('googleClient'),
+                ClaudeClient: Container.get<IClient>('claudeClient'),
+                LocalizationClient: Container.get<IClient>('localizationClient')
+            };
+
+            await Promise.all(
+                Object.entries(clients).map(async ([name, client]) => {
+                    await client.connect(); this.logger.info(`${name} connected`);
+                })
+            );
+        } catch (error) {
+            this.logger.error('Error starting clients', { error }); process.exit(1);
+        }
+    }
+
     private async gracefulShutdown(): Promise<void> {
         this.logger.info('Received shutdown signal');
 
         try {
-            await mongoose.connection.close();
-            this.logger.info('MongoDB connection closed'); process.exit(0);
+            const clients = {
+                GoogleClient: Container.get<IClient>('googleClient'),
+                ClaudeClient: Container.get<IClient>('claudeClient'),
+                LocalizationClient: Container.get<IClient>('localizationClient')
+            };
+
+            await Promise.all([
+                mongoose.connection.close()
+                    .then(() => this.logger.info('MongoDB disconnected'))
+                    .catch(err => this.logger.error('MongoDB disconnect error:', err)),
+                ...Object.entries(clients).map(async ([name, client]) => {
+                    try {
+                        await client.disconnect();
+                        this.logger.info(`${name} disconnected`);
+                    } catch (error) {
+                        this.logger.error(`Error disconnecting ${name}:`, error);
+                    }
+                })
+            ]);
+
+            this.logger.info('All connections closed'); process.exit(0);
         } catch (error) {
-            this.logger.error('Error during graceful shutdown', { error }); process.exit(1);
+            this.logger.error('Fatal error during graceful shutdown', { error }); process.exit(1);
         }
     }
 }

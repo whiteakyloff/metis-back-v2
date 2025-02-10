@@ -26,6 +26,7 @@
     "openai": "^4.83.0",
     "reflect-metadata": "^0.2.2",
     "routing-controllers": "^0.10.4",
+    "socket.io": "^4.8.1",
     "typedi": "^0.10.0",
     "winston": "^3.17.0",
     "zod": "^3.24.1"
