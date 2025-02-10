@@ -5,14 +5,16 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 
-import { Server } from "socket.io";
 import { config } from "@config";
+
+import { Server } from "socket.io";
 import { Container } from "typedi";
 import { useContainer } from "routing-controllers";
 import { setupContainer } from "@infrastructure/container";
-import { ILogger } from "@domain/services/impl.logger.service";
 import { errorHandler } from "@presentation/middlewares/error.middleware";
+
 import { IClient } from "@domain/clients/impl.client";
+import { ILogger } from "@domain/services/impl.logger.service";
 
 export class App {
     public readonly expressApp: express.Application;
