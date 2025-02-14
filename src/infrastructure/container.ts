@@ -1,6 +1,10 @@
-import { Container } from "typedi";
+import { App } from "../app";
+import { Server } from "socket.io";
+import { createServer } from 'http';
 
 import { config } from "@config";
+import { Container } from "typedi";
+
 import { LoggerService } from "./services/logger.service";
 
 import { MailService } from "./services/mail.service";
@@ -10,13 +14,12 @@ import { LocalizationService } from "./services/localization.service";
 
 import { GoogleClient } from "./clients/google.client";
 import { ClaudeClient } from "./clients/claude.client";
+import { LocalizationClient } from "@infrastructure/clients/localization.client";
 
 import { UserRepository } from "./database/mongoose/repositories/user.repository";
+import { VerificationRepository } from "@infrastructure/database/mongoose/repositories/verification.repository";
+
 import { RegisterUseCase } from "../application/use-cases/register.use-case";
-import { Server } from "socket.io";
-import { App } from "../app";
-import { createServer } from 'http';
-import {LocalizationClient} from "@infrastructure/clients/localization.client";
 
 export const setupContainer = (app: App) => {
     // Main services
@@ -28,6 +31,7 @@ export const setupContainer = (app: App) => {
 
     // Repositories
     Container.set('userRepository', new UserRepository());
+    Container.set('verificationRepository', new VerificationRepository())
 
     // Services
     Container.set('localizationService', new LocalizationService(config));
