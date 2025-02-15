@@ -1,8 +1,10 @@
 import {Inject, Service} from "typedi";
-import {Body, JsonController, Post, Res} from "routing-controllers";
+import {Body, JsonController, Post, Res, UseBefore} from "routing-controllers";
 import {RegisterDTO} from "@domain/dto/auth/register.dto";
 import {Response} from "express";
 import {RegisterUseCase} from "../../application/use-cases/register.use-case";
+import {validate} from "@presentation/middlewares/validation.middleware";
+import {authSchema} from "@presentation/validators/auth.validator";
 
 @Service()
 @JsonController("/auth")
@@ -13,6 +15,7 @@ export class AuthController {
     ) {}
 
     @Post("/register")
+    @UseBefore(validate(authSchema.register))
     async register(@Body() body: RegisterDTO, @Res() res: Response) {
         const result = await this.registerUseCase.execute(body);
 

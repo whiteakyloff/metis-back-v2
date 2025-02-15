@@ -1,19 +1,15 @@
-import { Container } from "typedi";
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 
 import { AuthController } from "@presentation/controllers/auth.controller";
-import { authSchema } from "@presentation/validators/auth.validator";
-import { validate } from "@presentation/middlewares/validation.middleware";
+import { useExpressServer } from "routing-controllers";
 
 const router = Router();
 
-const getController = () => Container.get(AuthController);
-
-router.post(
-    '/register', validate(authSchema.login),
-    (req: Request, res: Response, next: NextFunction) => {
-        getController().register(req.body, res).catch(next)
-    }
-);
+useExpressServer(router, {
+    controllers: [AuthController],
+    defaultErrorHandler: false,
+    routePrefix: "",
+    classTransformer: true, validation: true
+});
 
 export const authRoutes = router;

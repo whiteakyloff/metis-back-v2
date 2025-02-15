@@ -1,4 +1,4 @@
-'reflect-metadata';
+import "reflect-metadata";
 import { App } from './app';
 
 new App().start().catch((error) => {

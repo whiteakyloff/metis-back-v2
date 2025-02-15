@@ -107,3 +107,26 @@
 {"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-10T18:54:45.401Z"}
 {"level":"info","message":"Started at: 2025-02-10T18:54:45.402Z","service":"metis-backend","timestamp":"2025-02-10T18:54:45.402Z"}
 {"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-10T18:54:47.351Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-15T11:08:55.213Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-15T11:08:56.764Z"}
+{"level":"info","message":"ClaudeClient connected","service":"metis-backend","timestamp":"2025-02-15T11:08:56.837Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-15T11:08:56.863Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-15T11:08:56.869Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-15T11:08:56.871Z"}
+{"level":"info","message":"Started at: 2025-02-15T11:08:56.873Z","service":"metis-backend","timestamp":"2025-02-15T11:08:56.874Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-15T11:24:09.865Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-15T11:24:56.961Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-15T11:24:57.743Z"}
+{"level":"info","message":"ClaudeClient connected","service":"metis-backend","timestamp":"2025-02-15T11:24:57.744Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-15T11:24:57.746Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-15T11:24:57.752Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-15T11:24:57.754Z"}
+{"level":"info","message":"Started at: 2025-02-15T11:24:57.756Z","service":"metis-backend","timestamp":"2025-02-15T11:24:57.756Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-15T11:27:44.199Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-15T11:27:56.603Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-15T11:27:56.919Z"}
+{"level":"info","message":"ClaudeClient connected","service":"metis-backend","timestamp":"2025-02-15T11:27:56.919Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-15T11:27:56.920Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-15T11:27:56.922Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-15T11:27:56.923Z"}
+{"level":"info","message":"Started at: 2025-02-15T11:27:56.924Z","service":"metis-backend","timestamp":"2025-02-15T11:27:56.924Z"}
