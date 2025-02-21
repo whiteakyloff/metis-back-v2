@@ -37,6 +37,7 @@ export const errorHandler: ErrorRequestHandler = (
         });
         return;
     }
+
     if (error instanceof ZodError) {
         res.status(400).json({
             success: false, error: {

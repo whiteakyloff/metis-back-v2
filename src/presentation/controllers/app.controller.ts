@@ -5,7 +5,6 @@ import {Response} from "express";
 @Service()
 @JsonController("/app")
 export class AppController {
-    constructor() {}
 
     @Get("/health")
     async health(@Res() res: Response) {

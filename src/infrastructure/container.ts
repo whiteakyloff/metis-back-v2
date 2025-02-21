@@ -1,6 +1,4 @@
-import { App } from "../app";
 import { Server } from "socket.io";
-import { createServer } from 'http';
 
 import { config } from "@config";
 import { Container } from "typedi";
@@ -21,13 +19,13 @@ import { VerificationRepository } from "@infrastructure/database/mongoose/reposi
 
 import { RegisterUseCase } from "../application/use-cases/register.use-case";
 
-export const setupContainer = (app: App) => {
+export const setupContainer = () => {
     // Main services
     Container.set('config', config);
     Container.set('logger', new LoggerService());
-    Container.set('socket.io', new Server(
-        createServer(app.expressApp), { cors: { origin: config.corsOrigin } }
-    ));
+    Container.set('socket.io', new Server({
+        cors: { origin: config.corsOrigin }
+    }));
 
     // Core services
     Container.set('localizationService', new LocalizationService(config));

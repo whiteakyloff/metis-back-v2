@@ -1,10 +1,11 @@
+import 'reflect-metadata';
+
 import express from 'express';
 import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
-import bodyParser from 'body-parser';
 
 import { config } from "@config";
 
@@ -25,7 +26,7 @@ export class App {
 
     constructor() {
         this.expressApp = express();
-        setupContainer(this);
+        setupContainer();
         useContainer(Container);
 
         this.port = config.port;
@@ -42,12 +43,13 @@ export class App {
             await this.setupRoutes();
             await this.startClients();
 
-            this.expressApp.listen(this.port, () => {
+            const httpServer = this.expressApp.listen(this.port, () => {
                 this.logger.info(`Server is running on port ${config.port}`);
                 this.logger.info(`Environment: ${config.nodeEnv}`);
                 this.logger.info(`Started at: ${new Date().toISOString()}`);
             });
 
+            this.io.attach(httpServer);
             process.on('SIGINT', this.gracefulShutdown.bind(this));
             process.on('SIGTERM', this.gracefulShutdown.bind(this));
         } catch (error) {
@@ -61,21 +63,24 @@ export class App {
     }
 
     private setupMiddlewares(): void {
-        this.expressApp.use(helmet());
+        // Спочатку cors
         this.expressApp.use(cors({
-            origin: config.corsOrigin, credentials: true
+            origin: config.corsOrigin,
+            credentials: true
         }));
 
+        // Потім compression
+        this.expressApp.use(compression());
+
+        // Потім helmet
+        this.expressApp.use(helmet());
+
+        // Потім rate limiter
         const limiter = rateLimit({
             windowMs: 15 * 60 * 1000,
             limit: 100
         });
         this.expressApp.use(limiter);
-        this.expressApp.use(bodyParser.json());
-        this.expressApp.use(bodyParser.urlencoded({ extended: true }));
-        this.expressApp.use(compression());
-
-        this.io.httpServer.listen(this.port);
     }
 
     private async connectToDatabase(): Promise<void> {
@@ -117,6 +122,10 @@ export class App {
     private async gracefulShutdown(): Promise<void> {
         this.logger.info('Received shutdown signal');
 
+        const shutdownTimeout = setTimeout(() => {
+            this.logger.error('Forced shutdown due to timeout'); process.exit(1);
+        }, 10000);
+
         try {
             const clients = {
                 GoogleClient: Container.get<IClient>('googleClient'),
@@ -138,11 +147,11 @@ export class App {
                 })
             ]);
 
-            this.logger.info('All connections closed');
-            process.exit(0);
+            clearTimeout(shutdownTimeout);
+            this.logger.info('All connections closed'); process.exit(0);
         } catch (error) {
-            this.logger.error('Fatal error during graceful shutdown', { error });
-            process.exit(1);
+            clearTimeout(shutdownTimeout);
+            this.logger.error('Fatal error during graceful shutdown', { error }); process.exit(1);
         }
     }
 }
