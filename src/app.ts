@@ -17,10 +17,10 @@ import { IClient } from "@domain/clients/impl.client";
 import { ILogger } from "@domain/services/impl.logger.service";
 
 export class App {
-    public readonly expressApp: express.Application;
     private readonly port: number;
     private readonly logger: ILogger;
     private readonly io: Server;
+    public readonly expressApp: express.Application;
 
     constructor() {
         this.expressApp = express();
@@ -83,16 +83,16 @@ export class App {
     }
 
     private async setupRoutes(): Promise<void> {
-        const { authRoutes } = await import('@presentation/routes/auth.routes');
+        const { appRoutes } = await import('@presentation/routes/app.routes');
 
-        this.expressApp.use('/auth', authRoutes);
+        appRoutes.setup(this.expressApp);
     }
 
     private async startClients(): Promise<void> {
         try {
             const clients = {
                 GoogleClient: Container.get<IClient>('googleClient'),
-                ClaudeClient: Container.get<IClient>('claudeClient'),
+                // ClaudeClient: Container.get<IClient>('claudeClient'),
                 LocalizationClient: Container.get<IClient>('localizationClient')
             };
 
@@ -112,7 +112,7 @@ export class App {
         try {
             const clients = {
                 GoogleClient: Container.get<IClient>('googleClient'),
-                ClaudeClient: Container.get<IClient>('claudeClient'),
+                // ClaudeClient: Container.get<IClient>('claudeClient'),
                 LocalizationClient: Container.get<IClient>('localizationClient')
             };
 

@@ -17,10 +17,10 @@ export class ClaudeClient implements IAIClient {
     ) {}
 
     async connect(): Promise<void> {
+        let { apiKey, timeout, maxRetries } = this.config.claude;
+
         try {
-            this.client = new Anthropic({
-                apiKey: this.config.claude.apiKey
-            });
+            this.client = new Anthropic({ apiKey, timeout, maxRetries });
         } catch (error) {
             throw new AppError('CLAUDE_CLIENT_ERROR', 'Error connecting to Claude Client', 400);
         }

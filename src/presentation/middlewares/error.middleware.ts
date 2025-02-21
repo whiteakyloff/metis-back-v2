@@ -1,9 +1,18 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import { ZodError } from 'zod';
-import { Container } from 'typedi';
+import { Container, Service } from 'typedi';
 
 import { ILogger } from "@domain/services/impl.logger.service";
 import { AppError } from "@infrastructure/errors/app.error";
+import { ExpressErrorMiddlewareInterface, Middleware } from "routing-controllers";
+
+@Service()
+@Middleware({ type: 'after' })
+export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
+    error(error: any, request: any, response: any, next: any) {
+        errorHandler(error, request, response, next);
+    }
+}
 
 export const errorHandler: ErrorRequestHandler = (
     error: Error,

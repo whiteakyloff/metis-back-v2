@@ -130,3 +130,99 @@
 {"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-15T11:27:56.922Z"}
 {"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-15T11:27:56.923Z"}
 {"level":"info","message":"Started at: 2025-02-15T11:27:56.924Z","service":"metis-backend","timestamp":"2025-02-15T11:27:56.924Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:03:25.092Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:03:26.420Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:03:26.422Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:03:26.427Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:03:26.429Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:03:26.430Z","service":"metis-backend","timestamp":"2025-02-21T19:03:26.430Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:03:50.908Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:03:59.506Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:03:59.656Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:03:59.657Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:03:59.659Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:03:59.660Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:03:59.661Z","service":"metis-backend","timestamp":"2025-02-21T19:03:59.661Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:04:45.648Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:04:53.500Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:04:53.664Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:04:53.665Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:04:53.667Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:04:53.667Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:04:53.668Z","service":"metis-backend","timestamp":"2025-02-21T19:04:53.668Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:13:39.172Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:13:46.944Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:13:47.122Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:13:47.122Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:13:47.124Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:13:47.125Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:13:47.125Z","service":"metis-backend","timestamp":"2025-02-21T19:13:47.125Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:17:26.267Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:17:33.444Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:17:33.725Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:17:33.726Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:17:33.728Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:17:33.729Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:17:33.729Z","service":"metis-backend","timestamp":"2025-02-21T19:17:33.729Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:25:43.670Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:25:50.653Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:25:50.961Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:25:50.962Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:25:50.964Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:25:50.964Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:25:50.965Z","service":"metis-backend","timestamp":"2025-02-21T19:25:50.965Z"}
+{"error":"Validation failed","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"AppError: Validation failed\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:15:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T19:26:17.456Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:29:04.710Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:29:11.731Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:29:11.931Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:29:11.931Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:29:11.933Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T19:29:11.934Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:29:11.934Z","service":"metis-backend","timestamp":"2025-02-21T19:29:11.934Z"}
+{"error":"Validation failed","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"AppError: Validation failed\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:15:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T19:29:18.896Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:32:12.965Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:32:32.213Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:32:32.506Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:32:32.506Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:32:32.507Z"}
+{"level":"info","message":"Environment: production","service":"metis-backend","timestamp":"2025-02-21T19:32:32.507Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:32:32.507Z","service":"metis-backend","timestamp":"2025-02-21T19:32:32.507Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:35:02.141Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:35:09.121Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:35:09.292Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:35:09.292Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:35:09.293Z"}
+{"level":"info","message":"Environment: production","service":"metis-backend","timestamp":"2025-02-21T19:35:09.293Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:35:09.294Z","service":"metis-backend","timestamp":"2025-02-21T19:35:09.294Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T19:37:48.453Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T19:37:59.578Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T19:37:59.749Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T19:37:59.750Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T19:37:59.750Z"}
+{"level":"info","message":"Environment: production","service":"metis-backend","timestamp":"2025-02-21T19:37:59.751Z"}
+{"level":"info","message":"Started at: 2025-02-21T19:37:59.751Z","service":"metis-backend","timestamp":"2025-02-21T19:37:59.751Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T20:04:26.135Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T20:04:26.717Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T20:04:26.718Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T20:04:26.721Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T20:04:26.723Z"}
+{"level":"info","message":"Started at: 2025-02-21T20:04:26.723Z","service":"metis-backend","timestamp":"2025-02-21T20:04:26.724Z"}
+{"error":"Validation failed","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"AppError: Validation failed\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:15:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T20:04:55.603Z"}
+{"error":"stream is not readable","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"InternalServerError: stream is not readable\n    at readStream (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\raw-body\\index.js:185:17)\n    at getRawBody (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handleRequest (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\router\\lib\\layer.js:145:17)\n    at next (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\router\\lib\\route.js:159:13)\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:8:48)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T20:05:26.866Z"}
+{"error":"Validation failed","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"AppError: Validation failed\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:15:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T20:05:45.050Z"}
+{"error":"stream is not readable","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"InternalServerError: stream is not readable\n    at readStream (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\raw-body\\index.js:185:17)\n    at getRawBody (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handleRequest (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\router\\lib\\layer.js:145:17)\n    at next (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\router\\lib\\route.js:159:13)\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:8:48)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T20:05:52.306Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T20:08:43.797Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T20:08:53.304Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T20:08:54.984Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T20:08:54.985Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T20:08:54.992Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T20:08:54.994Z"}
+{"level":"info","message":"Started at: 2025-02-21T20:08:54.995Z","service":"metis-backend","timestamp":"2025-02-21T20:08:54.995Z"}
+{"level":"info","message":"Received shutdown signal","service":"metis-backend","timestamp":"2025-02-21T20:09:29.289Z"}
+{"level":"info","message":"Successfully connected to MongoDB","service":"metis-backend","timestamp":"2025-02-21T20:10:23.701Z"}
+{"level":"info","message":"GoogleClient connected","service":"metis-backend","timestamp":"2025-02-21T20:10:23.807Z"}
+{"level":"info","message":"LocalizationClient connected","service":"metis-backend","timestamp":"2025-02-21T20:10:23.808Z"}
+{"level":"info","message":"Server is running on port 8080","service":"metis-backend","timestamp":"2025-02-21T20:10:23.809Z"}
+{"level":"info","message":"Environment: development","service":"metis-backend","timestamp":"2025-02-21T20:10:23.810Z"}
+{"level":"info","message":"Started at: 2025-02-21T20:10:23.810Z","service":"metis-backend","timestamp":"2025-02-21T20:10:23.810Z"}
+{"error":"stream is not readable","level":"error","message":"Error occurred:","method":"POST","path":"/auth/register","service":"metis-backend","stack":"InternalServerError: stream is not readable\n    at readStream (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\raw-body\\index.js:185:17)\n    at getRawBody (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\routing-controllers\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handleRequest (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\router\\lib\\layer.js:145:17)\n    at next (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\node_modules\\router\\lib\\route.js:159:13)\n    at <anonymous> (C:\\Users\\whiteakyloff\\IdeaProjects\\metis-back-v2\\src\\presentation\\middlewares\\validation.middleware.ts:8:48)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-02-21T20:10:27.958Z"}

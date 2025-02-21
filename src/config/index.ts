@@ -27,10 +27,9 @@ export const config = {
         clientSecret: env.GOOGLE_CLIENT_SECRET
     },
     claude: {
-        apiKey: env.CLAUDE_API_KEY
-    },
-    deepseek: {
-        apiKey: env.DEEPSEEK_API_KEY
+        apiKey: env.CLAUDE_API_KEY,
+        timeout: env.CLAUDE_TIMEOUT,
+        maxRetries: env.CLAUDE_MAX_RETRIES,
     }
 };
 

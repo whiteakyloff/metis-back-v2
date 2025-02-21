@@ -17,6 +17,7 @@ export class LocalizationClient implements IClient {
             this.broadcastLocalization();
         });
     }
+
     connect(): Promise<void> {
         return new Promise((resolve: () => void, reject: (reason?: any) => void) => {
             try {
@@ -50,11 +51,19 @@ export class LocalizationClient implements IClient {
 
     private broadcastLocalization(): void {
         const localization = this.localizationService.getText();
-        this.io.to('localization_en').emit('translationsUpdate', localization);
+
+        this.io.to('localization_en').emit('translationsUpdate', {
+            success: true, data: localization,
+            timestamp: new Date().toISOString(), room: 'localization_en'
+        });
     }
 
     private sendLocalizationToClient(socket: Socket): void {
         const localization = this.localizationService.getText();
-        socket.emit('localizationUpdate', localization);
+
+        socket.emit('localizationUpdate', {
+            success: true, data: localization,
+            timestamp: new Date().toISOString(), room: 'localization_en'
+        });
     }
 }

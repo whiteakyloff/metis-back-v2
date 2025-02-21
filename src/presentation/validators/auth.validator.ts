@@ -6,19 +6,31 @@ const getLocalizationService = () => Container.get<ILocalizationService>('locali
 
 export const createAuthSchema = () => ({
     login: z.object({
-        email: z.string()
+        email: z.string({
+            message: getLocalizationService().getTextById('EMAIL_REQUIRED')
+        })
             .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT')),
-        password: z.string()
+        password: z.string({
+            message: getLocalizationService().getTextById('PASSWORD_REQUIRED')
+        })
             .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
     }),
     register: z.object({
-        email: z.string()
+        email: z.string(
+            { message: getLocalizationService().getTextById('EMAIL_REQUIRED') }
+        )
             .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT')),
-        username: z.string()
+        username: z.string(
+            { message: getLocalizationService().getTextById('USERNAME_REQUIRED') }
+        )
+            .nonempty(getLocalizationService().getTextById('USERNAME_REQUIRED'))
             .min(3, getLocalizationService().getTextById('INVALID_USERNAME_MIN_FORMAT'))
             .max(30, getLocalizationService().getTextById('INVALID_USERNAME_MAX_FORMAT'))
             .regex(/^[a-zA-Z0-9_-]+$/, getLocalizationService().getTextById('INVALID_USERNAME_FORMAT')),
-        password: z.string()
+        password: z.string(
+            { message: getLocalizationService().getTextById('PASSWORD_REQUIRED') }
+        )
+            .nonempty(getLocalizationService().getTextById('PASSWORD_REQUIRED'))
             .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_MIN_FORMAT'))
             .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
     })

@@ -1,10 +1,13 @@
-import {Inject, Service} from "typedi";
-import {Body, JsonController, Post, Res, UseBefore} from "routing-controllers";
-import {RegisterDTO} from "@domain/dto/auth/register.dto";
-import {Response} from "express";
-import {RegisterUseCase} from "../../application/use-cases/register.use-case";
-import {validate} from "@presentation/middlewares/validation.middleware";
-import {authSchema} from "@presentation/validators/auth.validator";
+import { Response } from "express";
+
+import { Inject, Service } from "typedi";
+import { Body, JsonController, Post, Res, UseBefore } from "routing-controllers";
+
+import { authSchema } from "@presentation/validators/auth.validator";
+import { validate } from "@presentation/middlewares/validation.middleware";
+
+import { RegisterDTO } from "@domain/dto/auth/register.dto";
+import { RegisterUseCase } from "../../application/use-cases/register.use-case";
 
 @Service()
 @JsonController("/auth")

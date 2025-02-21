@@ -9,7 +9,7 @@ import { ILocalizationService } from "@domain/services/impl.localization.service
 export class LocalizationService implements ILocalizationService {
     private readonly filePath: string;
     private readonly localizationCache: NodeCache;
-    private readonly refreshIntervalMs: number = 60 * 60 * 1000; // оновлення кожну годину
+    private readonly refreshIntervalMs: number = 60 * 60 * 1000;
 
     private updateCallbacks: (() => void)[] = [];
 
