@@ -1,6 +1,6 @@
 import { Container, Service } from "typedi";
 import { Body, HttpCode, JsonController, Post } from "routing-controllers";
-import { ValidateBody } from '../decorators/validation.decorator';
+import { ValidateBody } from "@presentation/middlewares/validation.middleware";
 
 import { AppError } from "@infrastructure/errors/app.error";
 import { authSchema } from "@presentation/validators/auth.validator";
@@ -21,7 +21,9 @@ export class AuthController {
         if (result.isSuccess()) {
             return {
                 success: true,
-                data: result.getValue()
+                data: {
+                    message: result.getValue()
+                }
             };
         }
         throw new AppError('REGISTER_RESULT_FAILURE', result.getError(), 400);
