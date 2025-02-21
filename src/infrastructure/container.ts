@@ -27,24 +27,24 @@ export const setupContainer = (app: App) => {
     Container.set('logger', new LoggerService());
     Container.set('socket.io', new Server(
         createServer(app.expressApp), { cors: { origin: config.corsOrigin } }
-    ))
+    ));
 
-    // Repositories
-    Container.set('userRepository', new UserRepository());
-    Container.set('verificationRepository', new VerificationRepository())
-
-    // Services
+    // Core services
     Container.set('localizationService', new LocalizationService(config));
-
     Container.set('passwordHasher', new PasswordHasher());
     Container.set('mailService', new MailService(config));
     Container.set('tokenService', new JwtTokenService(config));
+
+    // Repositories
+    Container.set('userRepository', new UserRepository());
+    Container.set('verificationRepository', new VerificationRepository());
 
     // Clients
     Container.set('googleClient', new GoogleClient(config));
     Container.set('claudeClient', new ClaudeClient(config));
     Container.set('localizationClient', new LocalizationClient(
-        Container.get('localizationService'), Container.get('socket.io')
+        Container.get('localizationService'),
+        Container.get('socket.io')
     ));
 
     // Use cases

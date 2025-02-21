@@ -1,26 +1,21 @@
 import { Response } from "express";
 
-import { Inject, Service } from "typedi";
+import { Container, Service } from "typedi";
 import { Body, JsonController, Post, Res, UseBefore } from "routing-controllers";
 
 import { authSchema } from "@presentation/validators/auth.validator";
 import { validate } from "@presentation/middlewares/validation.middleware";
 
-import { RegisterDTO } from "@domain/dto/auth/register.dto";
+import type { RegisterDTO } from "@domain/dto/auth/register.dto";
 import { RegisterUseCase } from "../../application/use-cases/register.use-case";
 
 @Service()
 @JsonController("/auth")
 export class AuthController {
-    constructor(
-        @Inject('registerUseCase')
-        private readonly registerUseCase: RegisterUseCase
-    ) {}
-
     @Post("/register")
     @UseBefore(validate(authSchema.register))
     async register(@Body() body: RegisterDTO, @Res() res: Response) {
-        const result = await this.registerUseCase.execute(body);
+        const result = await Container.get(RegisterUseCase).execute(body);
 
         if (result.isSuccess()) {
             return res.status(201).json({

@@ -6,7 +6,7 @@ import { IMailService } from "@domain/services/impl.mail.service";
 import { ILogger } from "@domain/services/impl.logger.service";
 import { Result } from "@infrastructure/core/result";
 import { User } from "@domain/models/impl.user.model";
-import { RegisterDTO } from "@domain/dto/auth/register.dto";
+import type { RegisterDTO } from "@domain/dto/auth/register.dto";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
 
 @Service()

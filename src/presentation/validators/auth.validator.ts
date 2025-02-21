@@ -4,7 +4,7 @@ import { ILocalizationService } from "@domain/services/impl.localization.service
 
 const getLocalizationService = () => Container.get<ILocalizationService>('localizationService');
 
-export const createAuthSchema = () => ({
+export const authSchema = {
     login: z.object({
         email: z.string({
             message: getLocalizationService().getTextById('EMAIL_REQUIRED')
@@ -34,6 +34,4 @@ export const createAuthSchema = () => ({
             .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_MIN_FORMAT'))
             .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
     })
-});
-
-export const authSchema = createAuthSchema();
+} as const;

@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
+import bodyParser from 'body-parser';
 
 import { config } from "@config";
 
@@ -24,31 +25,35 @@ export class App {
 
     constructor() {
         this.expressApp = express();
-        setupContainer(this); useContainer(Container);
+        setupContainer(this);
+        useContainer(Container);
 
         this.port = config.port;
         this.logger = Container.get('logger');
         this.io = Container.get('socket.io');
 
-        this.setupMiddlewares(); this.setupErrorHandling();
+        this.setupMiddlewares();
+        this.setupErrorHandling();
     }
 
     public async start(): Promise<void> {
-       try {
-           await this.connectToDatabase();
-           await this.setupRoutes(); await this.startClients();
+        try {
+            await this.connectToDatabase();
+            await this.setupRoutes();
+            await this.startClients();
 
-           this.expressApp.listen(this.port, () => {
-               this.logger.info(`Server is running on port ${config.port}`);
-               this.logger.info(`Environment: ${config.nodeEnv}`);
-               this.logger.info(`Started at: ${new Date().toISOString()}`);
-           });
+            this.expressApp.listen(this.port, () => {
+                this.logger.info(`Server is running on port ${config.port}`);
+                this.logger.info(`Environment: ${config.nodeEnv}`);
+                this.logger.info(`Started at: ${new Date().toISOString()}`);
+            });
 
-           process.on('SIGINT', this.gracefulShutdown.bind(this));
-           process.on('SIGTERM', this.gracefulShutdown.bind(this));
-       } catch (error) {
-           this.logger.error('Error starting server', { error }); process.exit(1);
-       }
+            process.on('SIGINT', this.gracefulShutdown.bind(this));
+            process.on('SIGTERM', this.gracefulShutdown.bind(this));
+        } catch (error) {
+            this.logger.error('Error starting server', { error });
+            process.exit(1);
+        }
     }
 
     private setupErrorHandling(): void {
@@ -66,8 +71,8 @@ export class App {
             limit: 100
         });
         this.expressApp.use(limiter);
-        this.expressApp.use(express.json());
-        this.expressApp.use(express.urlencoded({ extended: true }));
+        this.expressApp.use(bodyParser.json());
+        this.expressApp.use(bodyParser.urlencoded({ extended: true }));
         this.expressApp.use(compression());
 
         this.io.httpServer.listen(this.port);
@@ -78,7 +83,8 @@ export class App {
             await mongoose.connect(config.mongodbUri);
             this.logger.info('Successfully connected to MongoDB');
         } catch (error) {
-            this.logger.error('Error connecting to MongoDB', { error }); process.exit(1);
+            this.logger.error('Error connecting to MongoDB', { error });
+            process.exit(1);
         }
     }
 
@@ -98,11 +104,13 @@ export class App {
 
             await Promise.all(
                 Object.entries(clients).map(async ([name, client]) => {
-                    await client.connect(); this.logger.info(`${name} connected`);
+                    await client.connect();
+                    this.logger.info(`${name} connected`);
                 })
             );
         } catch (error) {
-            this.logger.error('Error starting clients', { error }); process.exit(1);
+            this.logger.error('Error starting clients', { error });
+            process.exit(1);
         }
     }
 
@@ -130,9 +138,11 @@ export class App {
                 })
             ]);
 
-            this.logger.info('All connections closed'); process.exit(0);
+            this.logger.info('All connections closed');
+            process.exit(0);
         } catch (error) {
-            this.logger.error('Fatal error during graceful shutdown', { error }); process.exit(1);
+            this.logger.error('Fatal error during graceful shutdown', { error });
+            process.exit(1);
         }
     }
 }
