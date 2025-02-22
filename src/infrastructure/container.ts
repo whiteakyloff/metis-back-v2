@@ -18,6 +18,7 @@ import { UserRepository } from "./database/mongoose/repositories/user.repository
 import { VerificationRepository } from "@infrastructure/database/mongoose/repositories/verification.repository";
 
 import { RegisterUseCase } from "../application/use-cases/register.use-case";
+import {VerificationService} from "@infrastructure/services/verification.service";
 
 export const setupContainer = () => {
     // Main services
@@ -27,15 +28,19 @@ export const setupContainer = () => {
         cors: { origin: config.corsOrigin }
     }));
 
-    // Core services
-    Container.set('localizationService', new LocalizationService(config));
-    Container.set('passwordHasher', new PasswordHasher());
-    Container.set('mailService', new MailService(config));
-    Container.set('tokenService', new JwtTokenService(config));
-
     // Repositories
     Container.set('userRepository', new UserRepository());
     Container.set('verificationRepository', new VerificationRepository());
+
+    // Core services
+    Container.set('localizationService', new LocalizationService(config));
+    Container.set('passwordHasher', new PasswordHasher());
+    Container.set('verificationService', new VerificationService(
+        Container.get('verificationRepository'),
+        Container.get('localizationService'),
+    ));
+    Container.set('mailService', new MailService(config));
+    Container.set('tokenService', new JwtTokenService(config));
 
     // Clients
     Container.set('googleClient', new GoogleClient(config));
@@ -51,6 +56,8 @@ export const setupContainer = () => {
         Container.get('mailService'),
         Container.get('userRepository'),
         Container.get('localizationService'),
-        Container.get('passwordHasher')
+        Container.get('passwordHasher'),
+        Container.get('verificationService'),
+        Container.get('verificationRepository')
     ));
 }

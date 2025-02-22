@@ -8,6 +8,8 @@ import { Result } from "@infrastructure/core/result";
 import { User } from "@domain/models/impl.user.model";
 import type { RegisterDTO } from "@domain/dto/auth/register.dto";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
+import { IVerificationService } from "@domain/services/impl.verification.service";
+import {IVerificationRepository} from "@domain/repositories/impl.verification.repository";
 
 @Service()
 export class RegisterUseCase {
@@ -22,6 +24,10 @@ export class RegisterUseCase {
         private readonly localizationService: ILocalizationService,
         @Inject('passwordHasher')
         private readonly passwordHasher: IPasswordHasher,
+        @Inject('verificationService')
+        private readonly verificationService: IVerificationService,
+        @Inject('verificationRepository')
+        private readonly verificationRepository: IVerificationRepository
     ) {}
 
     async execute(input: RegisterDTO): Promise<Result<string>> {
@@ -31,19 +37,40 @@ export class RegisterUseCase {
             if (existingUser) {
                 return Result.failure(this.localizationService.getTextById('USER_ALREADY_EXISTS'));
             }
-            const hashedPassword = await this.passwordHasher.hash(input.password);
+            const password = await this.passwordHasher.hash(input.password);
 
             const user = User.create({
-                email: input.email, username: input.username || input.email.split('@')[0], password: hashedPassword
+                email: input.email, username: input.username || input.email.split('@')[0], password
             });
+            const verificationResult = await this.verificationService.createVerificationCode(user.email);
+
+            if (!verificationResult.isSuccess()) {
+                return Result.failure(verificationResult.getError());
+            }
             await this.userRepository.save(user);
 
-            // verification code system.
-            await this.mailService.sendVerificationEmail(user.email, '123456');
+            try {
+                const value = verificationResult.getValue();
 
-            return Result.success(this.localizationService.getTextById('REGISTRATION_SUCCESSFUL'));
+                if (typeof value === 'string') {
+                    await this.mailService.sendVerificationEmail(user.email, value);
+                } else {
+                    await this.mailService.sendVerificationEmail(user.email, value.code);
+                }
+                return Result.success(
+                    this.localizationService.getTextById('REGISTRATION_SUCCESSFUL')
+                );
+            } catch (emailError) {
+                await this.userRepository.delete(user.email);
+                await this.verificationRepository.delete(user.email);
+
+                this.logger.error('Failed to send verification email:', { emailError });
+                return Result.failure(
+                    this.localizationService.getTextById('VERIFICATION_EMAIL_SENDING_FAILED')
+                );
+            }
         } catch (error) {
-            this.logger.error('Registration failed', {error});
+            this.logger.error('Registration failed ', { error });
             return Result.failure(this.localizationService.getTextById('REGISTRATION_FAILED'));
         }
     }

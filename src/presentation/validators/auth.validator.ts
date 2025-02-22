@@ -33,5 +33,15 @@ export const authSchema = {
             .nonempty(getLocalizationService().getTextById('PASSWORD_REQUIRED'))
             .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_MIN_FORMAT'))
             .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
+    }),
+    verifyEmail: z.object({
+        code: z.string(
+            { message: getLocalizationService().getTextById('CODE_REQUIRED') }
+        )
+            .length(6, getLocalizationService().getTextById('INVALID_CODE_FORMAT')),
+        email: z.string(
+            { message: getLocalizationService().getTextById('EMAIL_REQUIRED') }
+        )
+            .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT')),
     })
 } as const;

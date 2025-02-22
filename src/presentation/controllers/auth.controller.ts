@@ -7,11 +7,12 @@ import { authSchema } from "@presentation/validators/auth.validator";
 
 import { RegisterDTO } from "@domain/dto/auth/register.dto";
 import { RegisterUseCase } from "../../application/use-cases/register.use-case";
+import { VerifyEmailDTO } from "@domain/dto/auth/verify-email.dto";
+import { IVerificationService } from "@domain/services/impl.verification.service";
 
 @Service()
-@JsonController("/auth")
+@JsonController("/account")
 export class AuthController {
-
     @Post("/register") @HttpCode(201)
     async register(
         @Body() @ValidateBody(authSchema.register) body: RegisterDTO
@@ -21,11 +22,24 @@ export class AuthController {
         if (result.isSuccess()) {
             return {
                 success: true,
-                data: {
-                    message: result.getValue()
-                }
+                data: { message: result.getValue() }
             };
         }
         throw new AppError('REGISTER_RESULT_FAILURE', result.getError(), 400);
+    }
+
+    @Post("/verify-email") @HttpCode(201)
+    async verifyEmail(
+        @Body() @ValidateBody(authSchema.verifyEmail) body: VerifyEmailDTO
+    ) {
+        const result = await Container.get<IVerificationService>("verificationService").verifyEmail(body);
+
+        if (result.isSuccess()) {
+            return {
+                success: true,
+                data: { message: result.getValue() }
+            };
+        }
+        throw new AppError('VERIFY_EMAIL_RESULT_FAILURE', result.getError(), 400);
     }
 }

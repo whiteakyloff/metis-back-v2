@@ -40,13 +40,8 @@ export class LocalizationService implements ILocalizationService {
         });
 
         if (!response.ok) {
-            throw new AppError(
-                'LOCALIZATION_ERROR',
-                'Error fetching localization file',
-                400
-            );
+            throw new AppError('LOCALIZATION_ERROR', 'Error fetching localization file', 400);
         }
-
         const data = (await response.json()) as Record<string, string>;
         this.localizationCache.set('localization', data);
 
@@ -57,12 +52,19 @@ export class LocalizationService implements ILocalizationService {
         this.updateCallbacks.push(callback);
     }
 
-    getTextById(id: string): string {
-        const localizationData = this.localizationCache.get<Record<string, string>>('localization');
-        return localizationData ? localizationData[id] || id : id;
-    }
-
     getText(): Record<string, string> {
         return this.localizationCache.get<Record<string, string>>('localization') || {};
+    }
+
+    getTextById(id: string, replace?: Record<string, string>): string {
+        const localizationData = this.localizationCache.get<Record<string, string>>('localization');
+        let text = localizationData ? localizationData[id] || id : id;
+
+        if (replace) {
+            Object.entries(replace).forEach(([key, value]) => {
+                text = text.replace(`{${key}}`, value);
+            });
+        }
+        return text;
     }
 }
