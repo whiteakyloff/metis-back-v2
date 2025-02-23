@@ -11,7 +11,7 @@ export class PasswordHasher implements IPasswordHasher {
         return bcrypt.hash(password, this.SALT_ROUNDS);
     }
 
-    async compare(password: string, hash: string): Promise<boolean> {
-        return bcrypt.compare(password, hash);
+    async compare(password: string, hash: string | null | undefined): Promise<boolean> {
+        return hash ? bcrypt.compare(password, hash) : false;
     }
 }

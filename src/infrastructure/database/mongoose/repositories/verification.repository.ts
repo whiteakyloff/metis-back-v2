@@ -16,7 +16,7 @@ export class VerificationRepository implements IVerificationRepository {
             email: verificationCode.email,
             verificationCode: verificationCode.verificationCode,
             attemptsCount: verificationCode.attemptsCount,
-            expiresAt: verificationCode.codeExpiresAt
+            codeExpiresAt: verificationCode.codeExpiresAt
         })
     }
 
@@ -30,8 +30,9 @@ export class VerificationRepository implements IVerificationRepository {
 
     private mapToEntity(doc: any): VerificationCode {
         return new VerificationCode(
-            doc.email, doc.verificationCode,
-            doc.attemptsCount, doc.expiresAt
+            doc.email,
+            doc.attemptsCount,
+            doc.codeExpiresAt ? new Date(doc.codeExpiresAt) : null, doc.verificationCode
         );
     }
 }

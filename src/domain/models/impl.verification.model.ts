@@ -18,7 +18,7 @@ export class VerificationCode {
     }
 
     isExpired(): boolean {
-        return !!(this.codeExpiresAt && this.codeExpiresAt > new Date());
+        return !this.codeExpiresAt || this.codeExpiresAt < new Date();
     }
 
     getRemainingTime(): number | null {

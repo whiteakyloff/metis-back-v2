@@ -1,5 +1,5 @@
+import { OAuth2Client } from 'google-auth-library';
 import { Inject, Service } from "typedi";
-import { OAuth2Client } from "google-auth-library";
 
 import { AppConfig } from "@config";
 import { AppError } from "@infrastructure/errors/app.error";

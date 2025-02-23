@@ -34,8 +34,14 @@ export const authSchema = {
             .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_MIN_FORMAT'))
             .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
     }),
+    resendVerificationEmail: z.object({
+        email: z.string(
+            { message: getLocalizationService().getTextById('EMAIL_REQUIRED') }
+        )
+            .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT'))
+    }),
     verifyEmail: z.object({
-        code: z.string(
+        verificationCode: z.string(
             { message: getLocalizationService().getTextById('CODE_REQUIRED') }
         )
             .length(6, getLocalizationService().getTextById('INVALID_CODE_FORMAT')),

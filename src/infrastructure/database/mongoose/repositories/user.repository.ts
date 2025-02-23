@@ -31,11 +31,11 @@ export class UserRepository implements IUserRepository {
         );
     }
 
-    async delete(id: string): Promise<void> {
-        await UserModel.deleteOne({_id: id}).exec();
+    async delete(email: string): Promise<void> {
+        await UserModel.deleteOne({ email }).exec();
     }
 
-    async update(id: string, data: Partial<User>): Promise<void> {
-        await UserModel.updateOne({_id: id}, data).exec();
+    async update(email: string, data: Partial<User>): Promise<void> {
+        await UserModel.updateOne({ email }, data).exec();
     }
 }

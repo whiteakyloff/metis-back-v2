@@ -6,7 +6,7 @@ export interface VerificationCodeResult {
 }
 
 export interface IVerificationService {
-    createVerificationCode(email: string): Promise<Result<string | VerificationCodeResult>>;
+    createVerificationCode(email: string): Promise<Result<VerificationCodeResult>>;
 
     verifyEmail(data: VerifyEmailDTO): Promise<Result<string>>;
 }

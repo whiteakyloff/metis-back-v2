@@ -18,7 +18,7 @@ import { UserRepository } from "./database/mongoose/repositories/user.repository
 import { VerificationRepository } from "@infrastructure/database/mongoose/repositories/verification.repository";
 
 import { RegisterUseCase } from "../application/use-cases/register.use-case";
-import {VerificationService} from "@infrastructure/services/verification.service";
+import { VerificationService } from "@infrastructure/services/verification.service";
 
 export const setupContainer = () => {
     // Main services
@@ -37,7 +37,8 @@ export const setupContainer = () => {
     Container.set('passwordHasher', new PasswordHasher());
     Container.set('verificationService', new VerificationService(
         Container.get('verificationRepository'),
-        Container.get('localizationService'),
+        Container.get('userRepository'),
+        Container.get('localizationService')
     ));
     Container.set('mailService', new MailService(config));
     Container.set('tokenService', new JwtTokenService(config));

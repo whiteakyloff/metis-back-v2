@@ -35,7 +35,9 @@ export class RegisterUseCase {
             const existingUser = await this.userRepository.findByEmail(input.email);
 
             if (existingUser) {
-                return Result.failure(this.localizationService.getTextById('USER_ALREADY_EXISTS'));
+                return Result.failure(
+                    this.localizationService.getTextById('USER_ALREADY_EXISTS')
+                );
             }
             const password = await this.passwordHasher.hash(input.password);
 
@@ -50,13 +52,8 @@ export class RegisterUseCase {
             await this.userRepository.save(user);
 
             try {
-                const value = verificationResult.getValue();
+                await this.mailService.sendVerificationEmail(user.email, verificationResult.getValue().code);
 
-                if (typeof value === 'string') {
-                    await this.mailService.sendVerificationEmail(user.email, value);
-                } else {
-                    await this.mailService.sendVerificationEmail(user.email, value.code);
-                }
                 return Result.success(
                     this.localizationService.getTextById('REGISTRATION_SUCCESSFUL')
                 );
