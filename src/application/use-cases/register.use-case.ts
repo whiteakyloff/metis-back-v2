@@ -10,6 +10,8 @@ import type { RegisterDTO } from "@domain/dto/auth/register.dto";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
 import { IVerificationService } from "@domain/services/impl.verification.service";
 import {IVerificationRepository} from "@domain/repositories/impl.verification.repository";
+import {ResponseDTO} from "@domain/dto/auth/response.dto";
+import {ITokenService} from "@domain/services/impl.token.service";
 
 @Service()
 export class RegisterUseCase {
@@ -20,6 +22,8 @@ export class RegisterUseCase {
         private readonly mailService: IMailService,
         @Inject('userRepository')
         private readonly userRepository: IUserRepository,
+        @Inject('tokenService')
+        private readonly tokenService: ITokenService,
         @Inject('localizationService')
         private readonly localizationService: ILocalizationService,
         @Inject('passwordHasher')
@@ -30,7 +34,7 @@ export class RegisterUseCase {
         private readonly verificationRepository: IVerificationRepository
     ) {}
 
-    async execute(input: RegisterDTO): Promise<Result<string>> {
+    async execute(input: RegisterDTO): Promise<Result<ResponseDTO>> {
         try {
             const existingUser = await this.userRepository.findByEmail(input.email);
 
@@ -54,9 +58,14 @@ export class RegisterUseCase {
             try {
                 await this.mailService.sendVerificationEmail(user.email, verificationResult.getValue().code);
 
-                return Result.success(
-                    this.localizationService.getTextById('REGISTRATION_SUCCESSFUL')
-                );
+                const token = await this.tokenService.generateToken(
+                    { email: user.email, userId: user.id }
+                )
+                return Result.success(new ResponseDTO(
+                    token, this.localizationService.getTextById('REGISTRATION_SUCCESSFUL'), {
+                        id: user.id, email: user.email, username: user.username
+                    }
+                ))
             } catch (emailError) {
                 await this.userRepository.delete(user.email);
                 await this.verificationRepository.delete(user.email);

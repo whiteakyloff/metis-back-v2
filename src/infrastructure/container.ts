@@ -19,6 +19,7 @@ import { VerificationRepository } from "@infrastructure/database/mongoose/reposi
 
 import { RegisterUseCase } from "../application/use-cases/register.use-case";
 import { VerificationService } from "@infrastructure/services/verification.service";
+import { LoginUseCase } from "src/application/use-cases/login.use-case";
 
 export const setupContainer = () => {
     // Main services
@@ -56,9 +57,18 @@ export const setupContainer = () => {
         Container.get('logger'),
         Container.get('mailService'),
         Container.get('userRepository'),
+        Container.get('tokenService'),
         Container.get('localizationService'),
         Container.get('passwordHasher'),
         Container.get('verificationService'),
         Container.get('verificationRepository')
+    ));
+    Container.set(LoginUseCase, new LoginUseCase(
+        Container.get('logger'),
+        Container.get('userRepository'),
+        Container.get('passwordHasher'),
+        Container.get('googleClient'),
+        Container.get('tokenService'),
+        Container.get('localizationService')
     ));
 }

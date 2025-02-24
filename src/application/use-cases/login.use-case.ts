@@ -2,7 +2,8 @@ import { Inject, Service } from "typedi";
 import { Result } from "@infrastructure/core/result";
 
 import { User } from "@domain/models/impl.user.model";
-import { LoginDTO, LoginResponseDTO } from "@domain/dto/auth/login.dto";
+import { LoginDTO } from "@domain/dto/auth/login.dto";
+import { ResponseDTO } from "@domain/dto/auth/response.dto";
 import { GoogleClient } from "@infrastructure/clients/google.client";
 
 import { ILogger } from "@domain/services/impl.logger.service";
@@ -28,7 +29,7 @@ export class LoginUseCase {
         private readonly localizationService: ILocalizationService
     ) {}
 
-    async execute(input: LoginDTO): Promise<Result<LoginResponseDTO>> {
+    async execute(input: LoginDTO): Promise<Result<ResponseDTO>> {
         try {
             const user = await this.userRepository.findByEmail(input.email);
 
@@ -51,7 +52,7 @@ export class LoginUseCase {
             const token = await this.tokenService.generateToken(
                 { email: user.email, userId: user.id }
             )
-            return Result.success(new LoginResponseDTO(
+            return Result.success(new ResponseDTO(
                 token, this.localizationService.getTextById('LOGIN_SUCCESSFUL'), {
                     id: user.id, email: user.email, username: user.username
                 }
@@ -61,7 +62,7 @@ export class LoginUseCase {
         }
     }
 
-    async executeWithGoogle(body: { access_token: string }): Promise<Result<LoginResponseDTO>> {
+    async executeWithGoogle(body: { access_token: string }): Promise<Result<ResponseDTO>> {
         try {
             const client = this.googleClient.getClient();
 
@@ -82,7 +83,7 @@ export class LoginUseCase {
             const token = await this.tokenService.generateToken(
                 { email: user.email, userId: user.id }
             )
-            return Result.success(new LoginResponseDTO(
+            return Result.success(new ResponseDTO(
                 token, this.localizationService.getTextById('LOGIN_SUCCESSFUL'), {
                     id: user.id, email: user.email, username: user.username
                 }

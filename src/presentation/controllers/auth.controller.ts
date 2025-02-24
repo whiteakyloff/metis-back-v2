@@ -24,7 +24,7 @@ export class AuthController {
         if (result.isSuccess()) {
             return {
                 success: true,
-                data: { message: result.getValue() }
+                data: result.getValue()
             };
         }
         throw new AppError('REGISTER_RESULT_FAILURE', result.getError(), 400);
