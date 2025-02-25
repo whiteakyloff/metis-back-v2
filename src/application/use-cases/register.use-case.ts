@@ -1,25 +1,23 @@
 import { Inject, Service } from "typedi";
+import { Result } from "@infrastructure/core/result";
 
+import { User } from "@domain/models/impl.user.model";
+import { RegisterDTO } from "@domain/dto/auth/register.dto";
+import { ResponseDTO } from "@domain/dto/auth/response.dto";
+
+import { ILogger } from "@domain/services/impl.logger.service";
 import { IUserRepository } from "@domain/repositories/impl.user.repository";
 import { IPasswordHasher } from "@domain/services/impl.hasher.service";
-import { IMailService } from "@domain/services/impl.mail.service";
-import { ILogger } from "@domain/services/impl.logger.service";
-import { Result } from "@infrastructure/core/result";
-import { User } from "@domain/models/impl.user.model";
-import type { RegisterDTO } from "@domain/dto/auth/register.dto";
+import { ITokenService } from "@domain/services/impl.token.service";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
 import { IVerificationService } from "@domain/services/impl.verification.service";
-import {IVerificationRepository} from "@domain/repositories/impl.verification.repository";
-import {ResponseDTO} from "@domain/dto/auth/response.dto";
-import {ITokenService} from "@domain/services/impl.token.service";
+import { IVerificationRepository } from "@domain/repositories/impl.verification.repository";
 
 @Service()
 export class RegisterUseCase {
     constructor(
         @Inject('logger')
         private readonly logger: ILogger,
-        @Inject('mailService')
-        private readonly mailService: IMailService,
         @Inject('userRepository')
         private readonly userRepository: IUserRepository,
         @Inject('tokenService')
@@ -48,16 +46,16 @@ export class RegisterUseCase {
             const user = User.create({
                 email: input.email, username: input.username || input.email.split('@')[0], password
             });
-            const verificationResult = await this.verificationService.createVerificationCode(user.email);
-
-            if (!verificationResult.isSuccess()) {
-                return Result.failure(verificationResult.getError());
-            }
             await this.userRepository.save(user);
 
+            const verificationResult = await this.verificationService.createVerificationCode({
+                email: user.email, verificationType: 'REGISTER'
+            });
+            if (!verificationResult.isSuccess()) {
+                await this.userRepository.deleteByEmail(user.email);
+                return Result.failure(verificationResult.getError());
+            }
             try {
-                await this.mailService.sendVerificationEmail(user.email, verificationResult.getValue().code);
-
                 const token = await this.tokenService.generateToken(
                     { email: user.email, userId: user.id }
                 )
@@ -67,7 +65,7 @@ export class RegisterUseCase {
                     }
                 ))
             } catch (emailError) {
-                await this.userRepository.delete(user.email);
+                await this.userRepository.deleteByEmail(user.email);
                 await this.verificationRepository.delete(user.email);
 
                 this.logger.error('Failed to send verification email:', { emailError });

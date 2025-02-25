@@ -1,3 +1,3 @@
 export interface IMailService {
-    sendVerificationEmail(to: string, code: string): Promise<void>;
+    sendVerificationEmail(to: string, code: string): void;
 }

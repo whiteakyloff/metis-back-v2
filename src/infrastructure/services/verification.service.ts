@@ -1,13 +1,14 @@
 import { Inject, Service } from "typedi";
 import { Result } from "@infrastructure/core/result";
 
-import { VerifyEmailDTO } from "@domain/dto/auth/verify-email.dto";
+import {SendVerifyEmailDTO, VerifyEmailDTO} from "@domain/dto/auth/verify-email.dto";
 import { VerificationCode } from "@domain/models/impl.verification.model";
 
+import { IMailService } from "@domain/services/impl.mail.service";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
 import { IUserRepository } from "@domain/repositories/impl.user.repository";
 import { IVerificationRepository } from "@domain/repositories/impl.verification.repository";
-import { IVerificationService, VerificationCodeResult } from "@domain/services/impl.verification.service";
+import { IVerificationService } from "@domain/services/impl.verification.service";
 
 @Service()
 export class VerificationService implements IVerificationService {
@@ -16,15 +17,23 @@ export class VerificationService implements IVerificationService {
         private readonly verificationRepository: IVerificationRepository,
         @Inject('userRepository')
         private readonly userRepository: IUserRepository,
+        @Inject('mailService')
+        private readonly mailService: IMailService,
         @Inject('localizationService')
         private readonly localizationService: ILocalizationService
     ) {}
 
-    async createVerificationCode(email: string): Promise<Result<VerificationCodeResult>> {
+    async createVerificationCode(data: SendVerifyEmailDTO): Promise<Result<string>> {
+        const { email, verificationType } = data;
         const user = await this.userRepository.findByEmail(email);
         let verificationRecord = await this.verificationRepository.findByEmail(email);
 
-        if (user && user.emailVerified) {
+        if (!user) {
+            return Result.failure(
+                this.localizationService.getTextById('USER_NOT_FOUND', { email})
+            );
+        }
+        if (verificationType == 'REGISTER' && user.emailVerified) {
             return Result.failure(
                 this.localizationService.getTextById('EMAIL_ALREADY_VERIFIED')
             );
@@ -32,13 +41,9 @@ export class VerificationService implements IVerificationService {
         if (!verificationRecord) {
             verificationRecord = VerificationCode.create(email);
             await this.verificationRepository.save(verificationRecord);
+            this.mailService.sendVerificationEmail(email, verificationRecord.verificationCode!);
 
-            return Result.success(
-                {
-                    code: verificationRecord.verificationCode!,
-                    message: this.localizationService.getTextById('VERIFICATION_CODE_CREATED')
-                }
-            );
+            return Result.success(this.localizationService.getTextById('VERIFICATION_CODE_CREATED'));
         } else {
             if (verificationRecord.attemptsCount >= 3 && !verificationRecord.isExpired()) {
                 return Result.failure(
@@ -51,22 +56,25 @@ export class VerificationService implements IVerificationService {
                 ? VerificationCode.create(email)
                 : verificationRecord.update();
             await this.verificationRepository.update(email, updatedRecord);
+            this.mailService.sendVerificationEmail(email, verificationRecord.verificationCode!);
 
-            return Result.success(
-                {
-                    code: verificationRecord.verificationCode!,
-                    message: this.localizationService.getTextById('VERIFICATION_CODE_CREATED')
-                }
-            );
+            return Result.success(this.localizationService.getTextById('VERIFICATION_CODE_RECREATED', {
+                attemptsCount: (3 - updatedRecord.attemptsCount).toString(),
+            }));
         }
     }
 
     async verifyEmail(data: VerifyEmailDTO): Promise<Result<string>> {
-        const { email, verificationCode } = data;
+        const { email, verificationCode, verificationType } = data;
         const user = await this.userRepository.findByEmail(email);
         const verificationRecord = await this.verificationRepository.findByEmail(email);
 
-        if (user && user.emailVerified) {
+        if (!user) {
+            return Result.failure(
+                this.localizationService.getTextById('USER_NOT_FOUND', { email })
+            );
+        }
+        if (verificationType == 'REGISTER' && user.emailVerified) {
             return Result.failure(
                 this.localizationService.getTextById('EMAIL_ALREADY_VERIFIED')
             );
@@ -86,7 +94,7 @@ export class VerificationService implements IVerificationService {
                 this.localizationService.getTextById('VERIFICATION_CODE_EXPIRED')
             );
         }
-        await this.userRepository.update(email, { emailVerified: true });
+        await this.userRepository.updateByEmail(email, { emailVerified: true });
         await this.verificationRepository.delete(email);
 
         return Result.success(

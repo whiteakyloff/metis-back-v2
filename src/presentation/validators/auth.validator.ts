@@ -32,13 +32,16 @@ export const authSchema = {
         )
             .nonempty(getLocalizationService().getTextById('PASSWORD_REQUIRED'))
             .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_MIN_FORMAT'))
-            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
+            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]{8,}$/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
     }),
-    resendVerificationEmail: z.object({
+    sendVerificationEmail: z.object({
         email: z.string(
             { message: getLocalizationService().getTextById('EMAIL_REQUIRED') }
         )
-            .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT'))
+            .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT')),
+        verificationType: z.enum(['REGISTER', 'RECOVERY'], {
+            message: getLocalizationService().getTextById('INVALID_VERIFICATION_TYPE')
+        })
     }),
     verifyEmail: z.object({
         verificationCode: z.string(
@@ -49,5 +52,20 @@ export const authSchema = {
             { message: getLocalizationService().getTextById('EMAIL_REQUIRED') }
         )
             .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT')),
+        verificationType: z.enum(['REGISTER', 'RECOVERY'], {
+            message: getLocalizationService().getTextById('INVALID_VERIFICATION_TYPE')
+        })
+    }),
+    recovery: z.object({
+        email: z.string(
+            { message: getLocalizationService().getTextById('EMAIL_REQUIRED') }
+        )
+            .email(getLocalizationService().getTextById('INVALID_EMAIL_FORMAT')),
+        password: z.string(
+            { message: getLocalizationService().getTextById('PASSWORD_REQUIRED') }
+        )
+            .nonempty(getLocalizationService().getTextById('PASSWORD_REQUIRED'))
+            .min(8, getLocalizationService().getTextById('INVALID_PASSWORD_MIN_FORMAT'))
+            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]{8,}$/, getLocalizationService().getTextById('INVALID_PASSWORD_FORMAT'))
     })
 } as const;

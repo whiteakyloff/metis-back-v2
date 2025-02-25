@@ -4,7 +4,6 @@ import express from 'express';
 import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
 import compression from "compression";
 
 import { config } from "@config";
@@ -48,7 +47,6 @@ export class App {
                 this.logger.info(`Environment: ${config.nodeEnv}`);
                 this.logger.info(`Started at: ${new Date().toISOString()}`);
             });
-
             this.io.attach(httpServer);
             process.on('SIGINT', this.gracefulShutdown.bind(this));
             process.on('SIGTERM', this.gracefulShutdown.bind(this));
@@ -76,11 +74,11 @@ export class App {
         this.expressApp.use(helmet());
 
         // Потім rate limiter
-        const limiter = rateLimit({
+        /* const limiter = rateLimit({
             windowMs: 15 * 60 * 1000,
             limit: 100
         });
-        this.expressApp.use(limiter);
+        this.expressApp.use(limiter); */
     }
 
     private async connectToDatabase(): Promise<void> {

@@ -36,12 +36,13 @@ export const setupContainer = () => {
     // Core services
     Container.set('localizationService', new LocalizationService(config));
     Container.set('passwordHasher', new PasswordHasher());
+    Container.set('mailService', new MailService(config));
     Container.set('verificationService', new VerificationService(
         Container.get('verificationRepository'),
         Container.get('userRepository'),
+        Container.get('mailService'),
         Container.get('localizationService')
     ));
-    Container.set('mailService', new MailService(config));
     Container.set('tokenService', new JwtTokenService(config));
 
     // Clients
@@ -55,7 +56,6 @@ export const setupContainer = () => {
     // Use cases
     Container.set(RegisterUseCase, new RegisterUseCase(
         Container.get('logger'),
-        Container.get('mailService'),
         Container.get('userRepository'),
         Container.get('tokenService'),
         Container.get('localizationService'),

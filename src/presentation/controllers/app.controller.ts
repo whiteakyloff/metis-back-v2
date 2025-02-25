@@ -12,7 +12,7 @@ export class AppController
 {
     @Get("/health") @HttpCode(200)
     async health() {
-        return { success: true, message: 'status: OK' };
+        return { success: true, data: { message: 'status: OK' } };
     }
 
     @Authorized()

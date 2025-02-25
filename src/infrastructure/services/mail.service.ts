@@ -25,9 +25,9 @@ export class MailService implements IMailService {
         });
     }
 
-    async sendVerificationEmail(to: string, code: string): Promise<void> {
+    sendVerificationEmail(to: string, code: string) {
         try {
-            await this.transporter.sendMail({
+            this.transporter.sendMail({
                 from: this.config.email.user,
                 to,
                 subject: 'Email Verification',

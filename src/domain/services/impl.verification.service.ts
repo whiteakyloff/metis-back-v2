@@ -1,12 +1,8 @@
 import { Result } from "@infrastructure/core/result";
-import { VerifyEmailDTO } from "@domain/dto/auth/verify-email.dto";
-
-export interface VerificationCodeResult {
-    code: string; message: string;
-}
+import {SendVerifyEmailDTO, VerifyEmailDTO} from "@domain/dto/auth/verify-email.dto";
 
 export interface IVerificationService {
-    createVerificationCode(email: string): Promise<Result<VerificationCodeResult>>;
+    createVerificationCode(data: SendVerifyEmailDTO): Promise<Result<string>>;
 
     verifyEmail(data: VerifyEmailDTO): Promise<Result<string>>;
 }
