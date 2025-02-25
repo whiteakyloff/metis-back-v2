@@ -40,7 +40,8 @@ export class RecoveryUseCase {
 
             return Result.success(this.localizationService.getTextById('PASSWORD_RECOVERY_SUCCESSFUL'));
         } catch (error) {
-            this.logger.error("Recovery failed", { error }); return Result.failure(this.localizationService.getTextById('RECOVERY_FAILED'));
+            this.logger.error("Recovery failed", { error });
+            return Result.failure(this.localizationService.getTextById('RECOVERY_FAILED'));
         }
     }
 }

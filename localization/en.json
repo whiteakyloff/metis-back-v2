@@ -1,0 +1,40 @@
+{
+  "USER_NOT_FOUND": "User with email {email} not found",
+  "GOOGLE_ACCOUNT_CANNOT_RECOVER": "Google account password cannot be recovered",
+  "PASSWORD_RECOVERY_SUCCESSFUL": "Password has been successfully recovered",
+  "RECOVERY_FAILED": "Password recovery failed",
+
+  "EMAIL_REQUIRED": "Email is required",
+  "INVALID_EMAIL_FORMAT": "Invalid email format",
+  "PASSWORD_REQUIRED": "Password is required",
+  "INVALID_PASSWORD_FORMAT": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number",
+  "INVALID_PASSWORD_MIN_FORMAT": "Password must be at least 8 characters long",
+
+  "USERNAME_REQUIRED": "Username is required",
+  "INVALID_USERNAME_MIN_FORMAT": "Username must be at least 3 characters long",
+  "INVALID_USERNAME_MAX_FORMAT": "Username must be at most 30 characters long",
+  "INVALID_USERNAME_FORMAT": "Username can only contain letters, numbers, underscores and hyphens",
+
+  "CODE_REQUIRED": "Verification code is required",
+  "INVALID_CODE_FORMAT": "Verification code must be 6 characters long",
+  "INVALID_VERIFICATION_TYPE": "Invalid verification type",
+
+  "EMAIL_ALREADY_VERIFIED": "Email is already verified",
+  "VERIFICATION_CODE_CREATED": "Verification code has been created and sent to your email",
+  "VERIFICATION_CODE_RECREATED": "Verification code has been recreated and sent to your email. {attemptsCount} attempts remaining",
+  "TOO_MANY_VERIFICATION_ATTEMPTS": "Too many verification attempts. Please try again in {remainingTime}",
+  "VERIFICATION_NOT_FOUND": "Verification code not found",
+  "INVALID_VERIFICATION_CODE": "Invalid verification code",
+  "VERIFICATION_CODE_EXPIRED": "Verification code has expired",
+  "EMAIL_VERIFIED": "Email has been successfully verified",
+
+  "USER_ALREADY_EXISTS": "User with this email already exists",
+  "REGISTRATION_SUCCESSFUL": "Registration successful",
+  "REGISTRATION_FAILED": "Registration failed",
+  "VERIFICATION_EMAIL_SENDING_FAILED": "Failed to send verification email",
+
+  "LOGIN_SUCCESSFUL": "Login successful",
+  "LOGIN_FAILED": "Login failed",
+  "WRONG_PASSWORD": "Wrong password",
+  "GOOGLE_AUTH_FAILED": "Google authentication failed"
+}
