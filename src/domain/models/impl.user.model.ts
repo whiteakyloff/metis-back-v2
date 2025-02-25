@@ -12,10 +12,14 @@ export class User {
         email: string;
         username: string;
         password?: string | null;
+        emailVerified?: boolean;
     }): User {
         return new User(
             crypto.randomUUID(),
-            props.email, props.username, props.password
+            props.email,
+            props.username,
+            props.password,
+            props.emailVerified ?? false
         );
     }
 }

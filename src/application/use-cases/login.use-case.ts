@@ -77,7 +77,7 @@ export class LoginUseCase {
             let user = await this.userRepository.findByEmail(payload.email!);
 
             if (!user) {
-                user = User.create({ email: payload.email!, username: payload.email!.split('@')[0] });
+                user = User.create({ email: payload.email!, username: payload.email!.split('@')[0], emailVerified: true });
                 await this.userRepository.save(user);
             }
             const token = await this.tokenService.generateToken(
