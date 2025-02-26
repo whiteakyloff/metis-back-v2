@@ -29,6 +29,7 @@
       "@domain/*": ["src/domain/*"],
       "@presentation/*": ["src/presentation/*"],
       "@infrastructure/*": ["src/infrastructure/*"],
+      "@application/*": ["src/application/*"],
     }
   },
   "include": [
