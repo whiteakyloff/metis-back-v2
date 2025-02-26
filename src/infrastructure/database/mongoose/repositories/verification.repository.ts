@@ -1,15 +1,11 @@
 import { Service } from 'typedi';
+
+import { BaseRepository } from "@domain/repositories/base.repository";
 import { VerificationCode } from "@domain/models/impl.verification.model";
 import { VerificationCodeModel } from "../models/verification.model";
-import { IVerificationRepository } from "@domain/repositories/impl.verification.repository";
 
 @Service()
-export class VerificationRepository implements IVerificationRepository {
-    async findByEmail(email: string): Promise<VerificationCode | null> {
-        const verificationCode = await VerificationCodeModel.findOne({ email }).lean();
-
-        return verificationCode ? this.mapToEntity(verificationCode) : null;
-    }
+export class VerificationRepository extends BaseRepository<VerificationCode> {
 
     async save(verificationCode: VerificationCode): Promise<void> {
         await VerificationCodeModel.create({
@@ -19,20 +15,28 @@ export class VerificationRepository implements IVerificationRepository {
             codeExpiresAt: verificationCode.codeExpiresAt
         })
     }
-
-    async delete(email: string): Promise<void> {
-        await VerificationCodeModel.deleteOne({ email }).exec();
+    async findAll(): Promise<VerificationCode[]> {
+        const users = await VerificationCodeModel.find().lean();
+        return users.map(user => this.mapToEntity(user));
     }
 
-    async update(email: string, data: Partial<VerificationCode>): Promise<void> {
-        await VerificationCodeModel.updateOne({ email }, data).exec();
+    async findBy(filter: Partial<VerificationCode>): Promise<VerificationCode | null> {
+        const user = await VerificationCodeModel.findOne(filter).lean();
+        return user ? this.mapToEntity(user) : null;
+    }
+
+    async updateBy(filter: Partial<VerificationCode>, entity: Partial<VerificationCode>): Promise<void> {
+        await VerificationCodeModel.updateOne(filter, entity).exec();
+    }
+
+    async deleteBy(filter: Partial<VerificationCode>): Promise<void> {
+        await VerificationCodeModel.deleteOne(filter).exec();
     }
 
     private mapToEntity(doc: any): VerificationCode {
         return new VerificationCode(
-            doc.email,
-            doc.attemptsCount,
-            doc.codeExpiresAt ? new Date(doc.codeExpiresAt) : null, doc.verificationCode
+            doc.email, doc.attemptsCount,
+            doc.codeExpiresAt, doc.verificationCode
         );
     }
 }

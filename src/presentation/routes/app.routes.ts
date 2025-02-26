@@ -2,13 +2,13 @@ import express from "express";
 import { Container } from "typedi";
 
 import { useExpressServer } from "routing-controllers";
-
 import { ErrorHandlerMiddleware } from "@presentation/middlewares/error.middleware";
 
+import { User } from "@domain/models/impl.user.model";
+import { BaseRepository } from "@domain/repositories/base.repository";
 import { AppController } from "@presentation/controllers/app.controller";
 import { AuthController } from '@presentation/controllers/auth.controller';
 import { ITokenService } from "@domain/services/impl.token.service";
-import { IUserRepository } from "@domain/repositories/impl.user.repository";
 
 export const appRoutes = {
     controllers: [
@@ -37,21 +37,16 @@ export const appRoutes = {
             authorizationChecker: async (action, _roles) => {
                 try {
                     const token = action.request.headers.authorization?.split(' ')[1];
+                    if (!token) return false;
 
-                    if (!token) {
-                        return false;
-                    }
-                    const tokenService = Container.get<ITokenService>('tokenService');
-                    const decoded = await tokenService.verifyToken(token);
+                    const decoded = await Container.get<ITokenService>('tokenService').verifyToken(token);
+                    if (!decoded?.userId) return false;
 
-                    if (!decoded?.userId) {
-                        return false;
-                    }
-                    const userRepository = Container.get<IUserRepository>('userRepository');
-                    const user = await userRepository.findById(decoded!.userId);
-
+                    const user = await Container.get<BaseRepository<User>>('userRepository').findBy({
+                        id: decoded.userId
+                    });
                     if (!user) return false; action.request.user = user; return true
-                } catch (error) {
+                } catch {
                     return false;
                 }
             }

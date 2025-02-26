@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 import { configSchema } from "@presentation/validators/config.validator";
 
 dotenv.config();

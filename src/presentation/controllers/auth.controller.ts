@@ -6,14 +6,19 @@ import { AppError } from "@infrastructure/errors/app.error";
 import { authSchema } from "@presentation/validators/auth.validator";
 
 import { RegisterDTO } from "@domain/dto/auth/register.dto";
-import { RegisterUseCase } from "../../application/use-cases/register.use-case";
-import {SendVerifyEmailDTO, VerifyEmailDTO} from "@domain/dto/auth/verify-email.dto";
-import { IVerificationService } from "@domain/services/impl.verification.service";
 import { LoginDTO } from "@domain/dto/auth/login.dto";
+import {
+    SendVerifyEmailDTO, VerifyEmailDTO
+} from "@domain/dto/auth/verify-email.dto";
+import { RecoveryDTO } from "@domain/dto/auth/recovery.dto";
+import { User } from "@domain/models/impl.user.model";
+
 import { LoginUseCase } from "../../application/use-cases/login.use-case";
-import { IUserRepository } from "@domain/repositories/impl.user.repository";
-import {RecoveryDTO} from "@domain/dto/auth/recovery.dto";
-import {RecoveryUseCase} from "../../application/use-cases/recovery.use-case";
+import { RegisterUseCase } from "../../application/use-cases/register.use-case";
+import { RecoveryUseCase } from "../../application/use-cases/recovery.use-case";
+
+import { BaseRepository } from "@domain/repositories/base.repository";
+import { IVerificationService } from "@domain/services/impl.verification.service";
 
 @Service()
 @JsonController("/account")
@@ -21,8 +26,13 @@ export class AuthController {
     //test
     @Get("/remove") @HttpCode(201)
     async remove() {
-        await Container.get<IUserRepository>("userRepository").deleteByEmail("whiteakyloff@gmail.com");
-        return { success: true, data: { message: 'User removed' } };
+        return await Container.get<BaseRepository<User>>("userRepository").deleteBy({
+            email: "whiteakyloff@gmail.com"
+        }).then(() => {
+            return { success: true, data: { message: 'User removed' } }
+        }).catch(() => {
+            return { success: false, data: { message: 'User not found' } }
+        });
     }
 
     @Post("/register") @HttpCode(201)
@@ -56,7 +66,7 @@ export class AuthController {
     }
 
     @Post("/login/google") @HttpCode(200)
-    async loginWithGoogle(
+    async continueWithGoogle(
         @Body() body: { access_token: string }
     ) {
         const result = await Container.get(LoginUseCase).executeWithGoogle(body);

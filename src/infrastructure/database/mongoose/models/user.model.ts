@@ -15,4 +15,7 @@ const userSchema = new mongoose.Schema({
     authMethod: { type: String, enum: ['email', 'google'], default: 'email' },
 }, { timestamps: true });
 
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ username: 1 });
+
 export const UserModel = mongoose.model('User', userSchema);

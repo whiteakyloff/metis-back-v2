@@ -13,13 +13,15 @@ export class User {
         username: string;
         password?: string | null;
         emailVerified?: boolean;
+        authMethod?: 'email' | 'google';
     }): User {
         return new User(
             crypto.randomUUID(),
             props.email,
             props.username,
             props.password,
-            props.emailVerified ?? false
+            props.emailVerified ?? false,
+            props.authMethod ?? 'email'
         );
     }
 }

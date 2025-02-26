@@ -2,20 +2,21 @@ import 'reflect-metadata';
 
 import express from 'express';
 import mongoose from "mongoose";
+import compression from "compression";
 import cors from "cors";
 import helmet from "helmet";
-import compression from "compression";
+import rateLimit from "express-rate-limit";
 
 import { config } from "@config";
-
 import { Server } from "socket.io";
 import { Container } from "typedi";
 import { useContainer } from "routing-controllers";
 import { setupContainer } from "@infrastructure/container";
-import { errorHandler } from "@presentation/middlewares/error.middleware";
 
+import { errorHandler } from "@presentation/middlewares/error.middleware";
 import { IClient } from "@domain/clients/impl.client";
 import { ILogger } from "@domain/services/impl.logger.service";
+import { ILocalizationService } from "@domain/services/impl.localization.service";
 
 export class App {
     private readonly port: number;
@@ -61,24 +62,26 @@ export class App {
     }
 
     private setupMiddlewares(): void {
-        // Спочатку cors
         this.expressApp.use(cors({
             origin: config.corsOrigin,
             credentials: true
         }));
-
-        // Потім compression
         this.expressApp.use(compression());
-
-        // Потім helmet
         this.expressApp.use(helmet());
 
-        // Потім rate limiter
-        /* const limiter = rateLimit({
+        const authLimiter = rateLimit({
             windowMs: 15 * 60 * 1000,
-            limit: 100
+            limit: 5,
+            standardHeaders: true,
+            legacyHeaders: false,
+            message: {
+                success: false, error: {
+                    code: 'TOO_MANY_REQUESTS', message: Container.get<ILocalizationService>('localizationService').getTextById('TOO_MANY_REQUESTS')
+                }
+            }
         });
-        this.expressApp.use(limiter); */
+        this.expressApp.use('/v0/account/login', authLimiter);
+        this.expressApp.use('/v0/account/register', authLimiter);
     }
 
     private async connectToDatabase(): Promise<void> {
