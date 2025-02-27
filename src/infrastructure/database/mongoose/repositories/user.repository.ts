@@ -6,7 +6,6 @@ import { UserModel } from "../models/user.model";
 
 @Service()
 export class UserRepository extends BaseRepository<User> {
-
     async save(user: User): Promise<void> {
         await UserModel.create({
             _id: user.id, email: user.email,
