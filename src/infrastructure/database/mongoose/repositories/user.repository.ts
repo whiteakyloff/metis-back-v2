@@ -17,7 +17,7 @@ export class UserRepository extends BaseRepository<User> {
 
     async findAll(): Promise<User[]> {
         const users = await UserModel.find().lean();
-        return users.map(user => this.mapToEntity(user));
+        return users.map(this.mapToEntity);
     }
 
     async findBy(filter: Partial<User>): Promise<User | null> {
@@ -33,7 +33,7 @@ export class UserRepository extends BaseRepository<User> {
         await UserModel.deleteOne(filter).exec();
     }
 
-    private mapToEntity(doc: any): User {
+    private mapToEntity = (doc: any): User => {
         return new User(
             doc._id, doc.email,
             doc.username, doc.password,
