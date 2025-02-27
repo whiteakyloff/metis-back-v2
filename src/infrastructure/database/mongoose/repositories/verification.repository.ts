@@ -6,7 +6,6 @@ import { VerificationCodeModel } from "../models/verification.model";
 
 @Service()
 export class VerificationRepository extends BaseRepository<VerificationCode> {
-
     async save(verificationCode: VerificationCode): Promise<void> {
         await VerificationCodeModel.create({
             email: verificationCode.email,
