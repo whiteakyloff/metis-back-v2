@@ -16,13 +16,13 @@ export class VerificationRepository extends BaseRepository<VerificationCode> {
         })
     }
     async findAll(): Promise<VerificationCode[]> {
-        const users = await VerificationCodeModel.find().lean();
-        return users.map(user => this.mapToEntity(user));
+        const verificationCodes = await VerificationCodeModel.find().lean();
+        return verificationCodes.map(this.mapToEntity);
     }
 
     async findBy(filter: Partial<VerificationCode>): Promise<VerificationCode | null> {
-        const user = await VerificationCodeModel.findOne(filter).lean();
-        return user ? this.mapToEntity(user) : null;
+        const verificationCode = await VerificationCodeModel.findOne(filter).lean();
+        return verificationCode ? this.mapToEntity(verificationCode) : null;
     }
 
     async updateBy(filter: Partial<VerificationCode>, entity: Partial<VerificationCode>): Promise<void> {
@@ -33,7 +33,7 @@ export class VerificationRepository extends BaseRepository<VerificationCode> {
         await VerificationCodeModel.deleteOne(filter).exec();
     }
 
-    private mapToEntity(doc: any): VerificationCode {
+    private mapToEntity = (doc: any): VerificationCode => {
         return new VerificationCode(
             doc.email, doc.attemptsCount,
             doc.codeExpiresAt, doc.verificationCode
