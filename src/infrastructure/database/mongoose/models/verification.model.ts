@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const verificationCodeSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     verificationCode: { type: String, default: null },
     attemptsCount: { type: Number, default: 0 },
     codeExpiresAt: { type: Date, default: null }

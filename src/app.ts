@@ -104,6 +104,7 @@ export class App {
         try {
             const clients = {
                 GoogleClient: Container.get<IClient>('googleClient'),
+                QwenClient: Container.get<IClient>('qwenClient'),
                 // ClaudeClient: Container.get<IClient>('claudeClient'),
                 LocalizationClient: Container.get<IClient>('localizationClient')
             };
@@ -130,6 +131,7 @@ export class App {
         try {
             const clients = {
                 GoogleClient: Container.get<IClient>('googleClient'),
+                QwenClient: Container.get<IClient>('qwenClient'),
                 // ClaudeClient: Container.get<IClient>('claudeClient'),
                 LocalizationClient: Container.get<IClient>('localizationClient')
             };

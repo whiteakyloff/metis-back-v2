@@ -4,7 +4,7 @@ import { User } from "@domain/models/impl.user.model";
 
 const userSchema = new mongoose.Schema({
     _id: String,
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     password: { type: String,
         required: function(this: User) {
             return this.authMethod === 'email';

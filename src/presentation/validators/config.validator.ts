@@ -77,6 +77,14 @@ export const configSchema = z.object({
         })
         .describe('GitHub access token'),
 
+    // Qwen API configuration
+    QWEN_API_KEY: z.string()
+        .regex(/^[a-zA-Z0-9_-]+$/, {
+            message: 'QWEN_API_KEY must only contain alphanumeric characters, hyphens, and underscores'
+        })
+        .describe('Qwen API key'),
+    QWEN_BASE_URL: z.string(),
+
     // Claude AI configuration
     CLAUDE_API_KEY: z.string()
         .regex(/^[a-zA-Z0-9_-]+$/, {
@@ -94,5 +102,5 @@ export const configSchema = z.object({
         .transform((val) => parseInt(val, 10))
         .refine((val) => val >= 0, {
             message: "Max retries must be a non-negative number"
-        }),
+        })
 });

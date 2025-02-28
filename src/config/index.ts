@@ -27,6 +27,10 @@ export const config = {
         clientId: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET
     },
+    qwen: {
+        apiKey: env.QWEN_API_KEY,
+        baseURL: env.QWEN_BASE_URL
+    },
     claude: {
         apiKey: env.CLAUDE_API_KEY,
         timeout: env.CLAUDE_TIMEOUT,

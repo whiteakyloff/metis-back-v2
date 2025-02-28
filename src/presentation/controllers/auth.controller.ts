@@ -13,9 +13,9 @@ import {
 import { RecoveryDTO } from "@domain/dto/auth/recovery.dto";
 import { User } from "@domain/models/impl.user.model";
 
-import { LoginUseCase } from "../../application/use-cases/login.use-case";
-import { RegisterUseCase } from "../../application/use-cases/register.use-case";
-import { RecoveryUseCase } from "../../application/use-cases/recovery.use-case";
+import { LoginUseCase } from "@application/use-cases/login.use-case";
+import { RegisterUseCase } from "@application/use-cases/register.use-case";
+import { RecoveryUseCase } from "@application/use-cases/recovery.use-case";
 
 import { BaseRepository } from "@domain/repositories/base.repository";
 import { IVerificationService } from "@domain/services/impl.verification.service";

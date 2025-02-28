@@ -4,23 +4,23 @@ import { config } from "@config";
 import { Container } from "typedi";
 
 import { LoggerService } from "./services/logger.service";
-
 import { MailService } from "./services/mail.service";
 import { PasswordHasher } from "./services/hasher.service";
 import { JwtTokenService } from "./services/token.service";
 import { LocalizationService } from "./services/localization.service";
+import { VerificationService } from "./services/verification.service";
 
 import { GoogleClient } from "./clients/google.client";
+import { QwenClient } from "./clients/qwen.client";
 import { ClaudeClient } from "./clients/claude.client";
-import { LocalizationClient } from "@infrastructure/clients/localization.client";
+import { LocalizationClient } from "./clients/localization.client";
 
 import { UserRepository } from "./database/mongoose/repositories/user.repository";
-import { VerificationRepository } from "@infrastructure/database/mongoose/repositories/verification.repository";
+import { VerificationRepository } from "./database/mongoose/repositories/verification.repository";
 
-import { RegisterUseCase } from "../application/use-cases/register.use-case";
-import { VerificationService } from "@infrastructure/services/verification.service";
-import { LoginUseCase } from "src/application/use-cases/login.use-case";
-import { RecoveryUseCase } from "../application/use-cases/recovery.use-case";
+import { RegisterUseCase } from "@application/use-cases/register.use-case";
+import { LoginUseCase } from "@application/use-cases/login.use-case";
+import { RecoveryUseCase } from "@application/use-cases/recovery.use-case";
 
 export const setupContainer = () => {
     // Main services
@@ -48,6 +48,7 @@ export const setupContainer = () => {
 
     // Clients
     Container.set('googleClient', new GoogleClient(config));
+    Container.set('qwenClient', new QwenClient(config));
     Container.set('claudeClient', new ClaudeClient(config));
     Container.set('localizationClient', new LocalizationClient(
         Container.get('localizationService'),
