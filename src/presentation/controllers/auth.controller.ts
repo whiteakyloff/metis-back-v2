@@ -31,7 +31,7 @@ export class AuthController {
         }).then(() => {
             return { success: true, data: { message: 'User removed' } }
         }).catch(() => {
-            return { success: false, data: { message: 'User not found' } }
+            return { success: false, error: { message: 'User not found' } }
         });
     }
 

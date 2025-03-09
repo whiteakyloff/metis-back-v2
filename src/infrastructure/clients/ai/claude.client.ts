@@ -1,20 +1,26 @@
-import Anthropic from "@anthropic-ai/sdk";
-
 import { Inject, Service } from "typedi";
 
+import Anthropic from "@anthropic-ai/sdk";
+
+import { BaseAIClient } from "@domain/clients/impl.client";
 import { AppConfig } from "@config";
 import { AppError } from "@infrastructure/errors/app.error";
 
-import { IAIClient } from "@domain/clients/impl.client";
-
 @Service()
-export class ClaudeClient implements IAIClient {
+export class ClaudeClient extends BaseAIClient<Anthropic> {
     private client: Anthropic | null = null;
 
     constructor(
         @Inject('config')
         private readonly config: AppConfig
-    ) {}
+    ) { super() }
+
+    public getBase(): Anthropic {
+        if (!this.client) {
+            throw new AppError('CLAUDE_CLIENT_ERROR', 'Claude Client is not connected', 400);
+        }
+        return this.client;
+    }
 
     async connect(): Promise<void> {
         let { apiKey, timeout, maxRetries } = this.config.claude;

@@ -10,10 +10,10 @@ import { JwtTokenService } from "./services/token.service";
 import { LocalizationService } from "./services/localization.service";
 import { VerificationService } from "./services/verification.service";
 
-import { GoogleClient } from "./clients/google.client";
-import { QwenClient } from "./clients/qwen.client";
-import { ClaudeClient } from "./clients/claude.client";
-import { LocalizationClient } from "./clients/localization.client";
+import { GoogleClient } from "@infrastructure/clients/auth/google.client";
+import { QwenClient } from "./clients/ai/qwen.client";
+import { ClaudeClient } from "./clients/ai/claude.client";
+import { LocalizationClient } from "./clients/messaging/localization.client";
 
 import { UserRepository } from "./database/mongoose/repositories/user.repository";
 import { VerificationRepository } from "./database/mongoose/repositories/verification.repository";

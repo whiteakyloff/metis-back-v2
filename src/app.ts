@@ -14,7 +14,7 @@ import { useContainer } from "routing-controllers";
 import { setupContainer } from "@infrastructure/container";
 
 import { errorHandler } from "@presentation/middlewares/error.middleware";
-import { IClient } from "@domain/clients/impl.client";
+import { BaseClient } from "@domain/clients/impl.client";
 import { ILogger } from "@domain/services/impl.logger.service";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
 
@@ -52,8 +52,7 @@ export class App {
             process.on('SIGINT', this.gracefulShutdown.bind(this));
             process.on('SIGTERM', this.gracefulShutdown.bind(this));
         } catch (error) {
-            this.logger.error('Error starting server', { error });
-            process.exit(1);
+            this.logger.error('Error starting server', { error }); process.exit(1);
         }
     }
 
@@ -71,7 +70,7 @@ export class App {
 
         const authLimiter = rateLimit({
             windowMs: 15 * 60 * 1000,
-            limit: 5,
+            limit: 15,
             standardHeaders: true,
             legacyHeaders: false,
             message: {
@@ -103,10 +102,9 @@ export class App {
     private async startClients(): Promise<void> {
         try {
             const clients = {
-                GoogleClient: Container.get<IClient>('googleClient'),
-                QwenClient: Container.get<IClient>('qwenClient'),
-                // ClaudeClient: Container.get<IClient>('claudeClient'),
-                LocalizationClient: Container.get<IClient>('localizationClient')
+                GoogleClient: Container.get<BaseClient<any>>('googleClient'),
+                QwenClient: Container.get<BaseClient<any>>('qwenClient'),
+                LocalizationClient: Container.get<BaseClient<any>>('localizationClient')
             };
 
             await Promise.all(
@@ -130,10 +128,9 @@ export class App {
 
         try {
             const clients = {
-                GoogleClient: Container.get<IClient>('googleClient'),
-                QwenClient: Container.get<IClient>('qwenClient'),
-                // ClaudeClient: Container.get<IClient>('claudeClient'),
-                LocalizationClient: Container.get<IClient>('localizationClient')
+                GoogleClient: Container.get<BaseClient<any>>('googleClient'),
+                QwenClient: Container.get<BaseClient<any>>('qwenClient'),
+                LocalizationClient: Container.get<BaseClient<any>>('localizationClient')
             };
 
             await Promise.all([

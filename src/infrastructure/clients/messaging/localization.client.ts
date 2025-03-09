@@ -1,12 +1,12 @@
 import { Inject, Service } from "typedi";
 import { Server, Socket } from "socket.io";
 
-import { IClient } from "@domain/clients/impl.client";
+import { BaseClient } from "@domain/clients/impl.client";
 import { AppError } from "@infrastructure/errors/app.error";
 import { ILocalizationService } from "@domain/services/impl.localization.service";
 
 @Service()
-export class LocalizationClient implements IClient {
+export class LocalizationClient implements BaseClient<Server> {
     constructor(
         @Inject('localizationService')
         private readonly localizationService: ILocalizationService,
@@ -18,7 +18,11 @@ export class LocalizationClient implements IClient {
         });
     }
 
-    connect(): Promise<void> {
+    public getBase(): Server {
+        return this.io;
+    }
+
+    async connect(): Promise<void> {
         return new Promise((resolve: () => void, reject: (reason?: any) => void) => {
             try {
                 this.io.on('connection', (socket) => {
@@ -38,7 +42,7 @@ export class LocalizationClient implements IClient {
         });
     }
 
-    disconnect(): Promise<void> {
+    async disconnect(): Promise<void> {
         return new Promise((resolve: () => void, reject: (reason?: any) => void) => {
             try {
                 this.io.disconnectSockets();

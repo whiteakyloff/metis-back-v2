@@ -1,20 +1,20 @@
 import { OAuth2Client } from 'google-auth-library';
 import { Inject, Service } from "typedi";
 
+import { BaseClient } from "@domain/clients/impl.client";
 import { AppConfig } from "@config";
 import { AppError } from "@infrastructure/errors/app.error";
-import { IClient } from "@domain/clients/impl.client";
 
 @Service()
-export class GoogleClient implements IClient {
+export class GoogleClient extends BaseClient<OAuth2Client> {
     private client: OAuth2Client | null = null;
 
     constructor(
         @Inject('config')
         private readonly config: AppConfig
-    ) {}
+    ) { super() }
 
-    public getClient(): OAuth2Client {
+    public getBase(): OAuth2Client {
         if (!this.client) {
             throw new AppError('GOOGLE_CLIENT_ERROR', 'Google Client not connected', 400);
         }
