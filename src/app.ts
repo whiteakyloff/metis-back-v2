@@ -11,12 +11,13 @@ import { config } from "@config";
 import { Server } from "socket.io";
 import { Container } from "typedi";
 import { useContainer } from "routing-controllers";
-import { setupContainer } from "@infrastructure/container";
+import { setupContainer } from "@shared/infrastructure/container";
+import { errorHandler } from "@shared/presentation/middlewares/error.middleware";
 
-import { errorHandler } from "@presentation/middlewares/error.middleware";
-import { BaseClient } from "@domain/clients/impl.client";
-import { ILogger } from "@domain/services/impl.logger.service";
-import { ILocalizationService } from "@domain/services/impl.localization.service";
+import { ILogger } from "@shared/domain/services/impl.logger.service";
+import { ILocalizationService } from "@shared/domain/services/impl.localization.service";
+
+import { ClientRegistry } from "@shared/domain/clients/client.registry";
 
 export class App {
     private readonly port: number;
@@ -39,16 +40,16 @@ export class App {
 
     public async start(): Promise<void> {
         try {
-            await this.connectToDatabase();
-            await this.setupRoutes();
-            await this.startClients();
-
+            await Promise.all([
+                mongoose.connect(config.mongodb), this.setupRoutes(), this.startClients()
+            ]);
             const httpServer = this.expressApp.listen(this.port, () => {
                 this.logger.info(`Server is running on port ${config.port}`);
                 this.logger.info(`Environment: ${config.nodeEnv}`);
                 this.logger.info(`Started at: ${new Date().toISOString()}`);
             });
             this.io.attach(httpServer);
+
             process.on('SIGINT', this.gracefulShutdown.bind(this));
             process.on('SIGTERM', this.gracefulShutdown.bind(this));
         } catch (error) {
@@ -83,36 +84,38 @@ export class App {
         this.expressApp.use('/v0/account/register', authLimiter);
     }
 
-    private async connectToDatabase(): Promise<void> {
+    private async setupRoutes(): Promise<void> {
         try {
-            await mongoose.connect(config.mongodbUri);
-            this.logger.info('Successfully connected to MongoDB');
+            const { appRoutes } = await import('@shared/presentation/routes/app.routes');
+
+            appRoutes.setup(this.expressApp);
         } catch (error) {
-            this.logger.error('Error connecting to MongoDB', { error });
+            this.logger.error('Error setting up routes', { error });
             process.exit(1);
         }
     }
 
-    private async setupRoutes(): Promise<void> {
-        const { appRoutes } = await import('@presentation/routes/app.routes');
-
-        appRoutes.setup(this.expressApp);
-    }
-
     private async startClients(): Promise<void> {
         try {
-            const clients = {
-                GoogleClient: Container.get<BaseClient<any>>('googleClient'),
-                QwenClient: Container.get<BaseClient<any>>('qwenClient'),
-                LocalizationClient: Container.get<BaseClient<any>>('localizationClient')
-            };
+            const clientRegistry = Container.get<ClientRegistry>('clientRegistry');
 
-            await Promise.all(
-                Object.entries(clients).map(async ([name, client]) => {
-                    await client.connect();
-                    this.logger.info(`${name} connected`);
-                })
-            );
+            await clientRegistry.connectAll();
+            this.logger.info('All clients connected successfully', {
+                clients: Object.values(clientRegistry.getClients()).map(client => client.constructor.name)
+            });
+        } catch (error) {
+            this.logger.error('Error starting clients', { error });
+        }
+    }
+
+    private async stopClients(): Promise<void> {
+        try {
+            const clientRegistry = Container.get<ClientRegistry>('clientRegistry');
+
+            await clientRegistry.disconnectAll();
+            this.logger.info('All clients disconnected successfully', {
+                clients: Object.values(clientRegistry.getClients()).map(client => client.constructor.name)
+            });
         } catch (error) {
             this.logger.error('Error starting clients', { error });
             process.exit(1);
@@ -125,28 +128,10 @@ export class App {
         const shutdownTimeout = setTimeout(() => {
             this.logger.error('Forced shutdown due to timeout'); process.exit(1);
         }, 10000);
-
         try {
-            const clients = {
-                GoogleClient: Container.get<BaseClient<any>>('googleClient'),
-                QwenClient: Container.get<BaseClient<any>>('qwenClient'),
-                LocalizationClient: Container.get<BaseClient<any>>('localizationClient')
-            };
-
             await Promise.all([
-                mongoose.connection.close()
-                    .then(() => this.logger.info('MongoDB disconnected'))
-                    .catch(err => this.logger.error('MongoDB disconnect error:', err)),
-                ...Object.entries(clients).map(async ([name, client]) => {
-                    try {
-                        await client.disconnect();
-                        this.logger.info(`${name} disconnected`);
-                    } catch (error) {
-                        this.logger.error(`Error disconnecting ${name}:`, error);
-                    }
-                })
+                mongoose.connection.close(), this.stopClients()
             ]);
-
             clearTimeout(shutdownTimeout);
             this.logger.info('All connections closed'); process.exit(0);
         } catch (error) {

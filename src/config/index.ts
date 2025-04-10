@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-import { configSchema } from "@presentation/validators/config.validator";
+import { configSchema } from "@shared/presentation/validators/config.validator";
 
 dotenv.config();
 
@@ -9,8 +9,8 @@ const env = configSchema.parse(process.env);
 export const config = {
     port: env.PORT,
     nodeEnv: env.NODE_ENV,
-    corsOrigin: process.env.CORS_ORIGIN,
-    mongodbUri: env.MONGODB_URI,
+    corsOrigin: env.CORS_ORIGIN,
+    mongodb: env.MONGODB,
     jwt: {
         secret: env.JWT_SECRET,
         expiresIn: env.JWT_EXPIRES_IN
@@ -22,6 +22,12 @@ export const config = {
     github: {
         url: env.GITHUB_URL,
         token: env.GITHUB_TOKEN
+    },
+    apple: {
+        clientId: env.APPLE_CLIENT_ID,
+        teamId: env.APPLE_TEAM_ID,
+        keyId: env.APPLE_KEY_ID,
+        privateKey: env.APPLE_PRIVATE_KEY
     },
     google: {
         clientId: env.GOOGLE_CLIENT_ID,

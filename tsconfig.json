@@ -26,10 +26,8 @@
     "baseUrl": ".",
     "paths": {
       "@config": ["src/config/index"],
-      "@domain/*": ["src/domain/*"],
-      "@presentation/*": ["src/presentation/*"],
-      "@infrastructure/*": ["src/infrastructure/*"],
-      "@application/*": ["src/application/*"],
+      "@modules/*": ["src/modules/*"],
+      "@shared/*": ["src/modules/shared/*"]
     }
   },
   "include": [
